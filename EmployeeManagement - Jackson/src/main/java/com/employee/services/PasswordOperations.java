@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 
 import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.ServerSideValidations;
 import com.employee.util.EmployeeUtil;
 
 public class PasswordOperations {
@@ -15,16 +16,18 @@ public class PasswordOperations {
 	public static String defaultPass = "pass123";
 
 	public void changePassword() {
-		String id = CheckLogin.id;
+		String id = ServerSideValidations.id;
 		Scanner sc = new Scanner(System.in);
 
 		System.out.print("Enter new password:");
 		String password = sc.next();
 		sc.nextLine();
+		if(!util.validatePassword(password)) return;
 
 		System.out.print("Re-Enter new password:");
 		String samePassword = sc.next();
 		sc.nextLine();
+		if(!util.validatePassword(password)) return;
 
 		if (password.equals(samePassword)) {
 			String hashPassword = util.hash(password);

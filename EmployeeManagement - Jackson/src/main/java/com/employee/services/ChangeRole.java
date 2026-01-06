@@ -1,39 +1,34 @@
 package com.employee.services;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.ServerSideValidations;
 import com.employee.model.Employee;
 import com.employee.util.EmployeeUtil;
 
 public class ChangeRole {
 	EmployeeDAO dao = new EmployeeDAOImpl();
-	EmployeeUtil util = new EmployeeUtil();
+	ServerSideValidations validations = new ServerSideValidations();
 	JSONParser parser = new JSONParser();
-	Employee employee = new Employee();
+	EmployeeUtil util = new EmployeeUtil();
 	GetEmployee getEmployee = new GetEmployee();
 	Scanner sc = new Scanner(System.in);
 	
 	public void grantRole() {	
 		System.out.print("Enter emp id to grant role:");
 		String id = sc.next();
-		employee.setId(id);
-		boolean present = util.checkEmployee(id);
+		if(!util.validateID(id)) return;
+		boolean present = validations.checkEmployee(id);
 		
 		if(present) {
 			System.out.print("Enter new role:");
 			String role = sc.next();
 			sc.nextLine();
-			employee.setRole(role);
+			if(!util.validateRole(role)) return;
 
 			dao.grantRole(id, role);
 		}
@@ -46,13 +41,13 @@ public class ChangeRole {
 
 		System.out.print("Enter emp id to revoke role:");
 		String id = sc.next();
-		employee.setId(id);
-		boolean present = util.checkEmployee(id);
+		if(!util.validateID(id)) return;
+		boolean present = validations.checkEmployee(id);
 		if(present) {
 			System.out.print("Enter role to revoke:");
 			String role = sc.next();
 			sc.nextLine();
-			employee.setRole(role);
+			if(!util.validateRole(role)) return;
 			
 			dao.revokeRole(id, role);
 		}

@@ -10,15 +10,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.employee.controller.LoginController;
-import com.employee.services.CheckLogin;
-import com.employee.services.GetEmployee;
-import com.employee.util.EmployeeUtil;
+import com.employee.services.EmployeeLogin;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
 //	GetEmployee getEmployee = new GetEmployee();
-	EmployeeUtil util = new EmployeeUtil();
+	ServerSideValidations validations = new ServerSideValidations();
 	public final File file = new File("src/main/resources/employeeDetails.json");
 	JSONParser parser = new JSONParser();
 
@@ -48,7 +45,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public void addEmployee(String name, String dept, String DOB, String address, String email, JSONArray rolesArray,
 			String hashPassword) {
 		try {
-			String id = util.genId(); // AUTO INCREMENT ID Method
+			String id = validations.genId(); // AUTO INCREMENT ID Method
 			JSONArray array = getDataFromFile();
 
 			JSONObject jsonObject = new JSONObject();
@@ -79,7 +76,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				JSONObject jsonObject = (JSONObject) object;
 				if (jsonObject.get("id").equals((String) id)) {
 					jsonObject.put("name", name); // Add Name into JSON Object
-					if (CheckLogin.role != "USER") {
+					if (ServerSideValidations.role != "USER") {
 						jsonObject.put("department", dept); // Add Dept into JSON Object
 					}
 					jsonObject.put("dob", DOB); // Add Name into JSON Object
@@ -161,7 +158,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 					jsonObject.replace("password", password);
 					System.out.println("Successfully changed password");
 					saveToFile(array);
-					LoginController.loginCheck();
+					EmployeeLogin.loginCheck();
 					break;
 				}
 			}

@@ -1,45 +1,38 @@
 package com.employee.services;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDAOImpl;
-import com.employee.exception.EmployeeDoesNotExistException;
-import com.employee.exception.InvalidIDException;
+import com.employee.dao.ServerSideValidations;
 import com.employee.model.Employee;
 import com.employee.util.EmployeeUtil;
 
 public class UpdateEmployee {
 
 	EmployeeDAO dao = new EmployeeDAOImpl();
-	EmployeeUtil util = new EmployeeUtil();
+	ServerSideValidations validations = new ServerSideValidations();
 	GetEmployee getEmployee = new GetEmployee();
+	EmployeeUtil util = new EmployeeUtil();
 	Employee employee = new Employee();
 	Scanner sc = new Scanner(System.in);
 
 	public void update() {
 		String id;
-		if (CheckLogin.role.equals("USER")) {
-			id = CheckLogin.id;
+		if (ServerSideValidations.role.equals("USER")) {
+			id = ServerSideValidations.id;
 		} else {
-			System.out.println("Enter emp id:");
+			System.out.print("Enter emp id:");
 			id = sc.next();
+			if(!util.validateID(id)) return;
 		}
 
-		boolean present = util.checkEmployee(id);
+		boolean present = validations.checkEmployee(id);
 
 		if (present) {
 			String dept = "";
 			String name = "";
-			if (!CheckLogin.role.equals("USER")) {
+			if (!ServerSideValidations.role.equals("USER")) {
 				System.out.print("Enter emp first name:");
 				String fname = sc.next();
 				sc.nextLine();
@@ -47,12 +40,12 @@ public class UpdateEmployee {
 				System.out.print("Enter emp last name:");
 				String lname = sc.next();
 				name = fname + " " + lname;
-				employee.setName(name);
+				if(!util.validateName(name)) return;
 				sc.nextLine();
 
 				System.out.print("Enter emp dept:");
 				dept = sc.next();
-				employee.setDept(dept);
+				if(!util.validateDept(dept)) return;
 				sc.nextLine();
 			}
 
@@ -69,19 +62,19 @@ public class UpdateEmployee {
 			sc.nextLine();
 
 			String DOB = day + "-" + month + "-" + year;
-			employee.setDOB(DOB);
+			if(!util.validateDOB(DOB)) return;
 
 			System.out.print("Enter emp address:");
 			String address = sc.nextLine();
-			employee.setAddress(address);
+			if(!util.validateAddress(address)) return;
 
 			System.out.print("Enter emp email:");
 			String email = sc.next();
-			employee.setEmail(email);
+			if(!util.validateEmail(email)) return;
 			sc.nextLine();
 			
 			dao.updateEmployee(id,name,dept,DOB,address,email);
-			if (!CheckLogin.role.equals("USER")) {
+			if (!ServerSideValidations.role.equals("USER")) {
 				getEmployee.get_all(); // SHOW records after every operation
 			} else {
 				getEmployee.get_by_id();

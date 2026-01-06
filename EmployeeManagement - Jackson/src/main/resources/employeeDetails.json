@@ -1,1 +1,650 @@
-[{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN","USER","MANAGER"],"address":"Bangalore","dob":"12:03:1995","name":"Aarav Sharma","id":"tek1","department":"IT","email":"aarav.sharma@gmail.com"},{"password":"6551617436f462208d5b48e06e32f93dd73375f0","role":["USER"],"address":"Secundarabad","dob":"19-07-1995","name":"Rohan Verma","id":"tek2","department":"","email":"rohan.verma@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Mumbai","dob":"05:11:1992","name":"Vikram Singh","id":"tek3","department":"Finance","email":"vikram.singh@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Ahmedabad","dob":"18-02-1997","name":"Kunal Mehra","id":"tek4","department":"Sales","email":"kunal.mehta@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Kochi","dob":"09:09:1994","name":"Rahul Nair","id":"tek5","department":"IT","email":"rahul.nair@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Hyderabad","dob":"27:06:1991","name":"Suresh Rao","id":"tek6","department":"Operations","email":"suresh.rao@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Jaipur","dob":"14:02:1998","name":"Ankit Gupta","id":"tek7","department":"Marketing","email":"ankit.gupta@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Pune","dob":"30:10:1995","name":"Pranav Joshi","id":"tek8","department":"Support","email":"pranav.joshi@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Warangal","dob":"11:12:1990","name":"Arjun Reddy","id":"tek9","department":"IT","email":"arjun.reddy@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Chandigarh","dob":"03:05:1996","name":"Nikhil Bansal","id":"tek10","department":"Finance","email":"nikhil.bansal@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Nagpur","dob":"22:08:1993","name":"Amit Kulkarni","id":"tek11","department":"Operations","email":"amit.kulkarni@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Indore","dob":"17:04:1997","name":"Siddharth Jain","id":"tek12","department":"Sales","email":"siddharth.jain@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Gurgaon","dob":"29:09:1992","name":"Deepak Yadav","id":"tek13","department":"HR","email":"deepak.yadav@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Surat","dob":"06:06:1998","name":"Manish Patel","id":"tek14","department":"Marketing","email":"manish.patel@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Varanasi","dob":"19:01:1994","name":"Sanjay Mishra","id":"tek15","department":"Finance","email":"sanjay.mishra@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Bhopal","dob":"25:03:1999","name":"Harsh Agrawal","id":"tek16","department":"IT","email":"harsh.agrawal@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Chennai","dob":"08:07:1991","name":"Naveen Kumar","id":"tek17","department":"Support","email":"naveen.kumar@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Udaipur","dob":"16:10:1996","name":"Pankaj Soni","id":"tek18","department":"Operations","email":"pankaj.soni@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Ludhiana","dob":"02:12:1993","name":"Ritesh Malhotra","id":"tek19","department":"Sales","email":"ritesh.malhotra@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Amritsar","dob":"28:05:1997","name":"Mohit Chawla","id":"tek20","department":"HR","email":"mohit.chawla@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Coimbatore","dob":"13:09:1990","name":"Aditya Iyer","id":"tek21","department":"IT","email":"aditya.iyer@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Noida","dob":"24:02:1998","name":"Varun Saxena","id":"tek22","department":"Finance","email":"varun.saxena@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Madurai","dob":"07:11:1994","name":"Karthik Subramanian","id":"tek23","department":"Operations","email":"karthik.subramanian@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Vijayawada","dob":"15:06:1996","name":"Ravi Teja","id":"tek24","department":"Support","email":"ravi.teja@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Prayagraj","dob":"01:01:1992","name":"Shubham Pandey","id":"tek25","department":"Marketing","email":"shubham.pandey@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Panipat","dob":"04:04:1999","name":"Neeraj Arora","id":"tek26","department":"Sales","email":"neeraj.arora@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Lucknow","dob":"20:08:1993","name":"Alok Srivastava","id":"tek27","department":"HR","email":"alok.srivastava@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Mangalore","dob":"10:12:1997","name":"Rohit Shetty","id":"tek28","department":"Finance","email":"rohit.shetty@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Aurangabad","dob":"26:03:1991","name":"Sunil Deshmukh","id":"tek29","department":"Operations","email":"sunil.deshmukh@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Ujjain","dob":"18:09:1998","name":"Aakash Malviya","id":"tek30","department":"IT","email":"aakash.malviya@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Dehradun","dob":"05:05:1994","name":"Gaurav Khanna","id":"tek31","department":"Sales","email":"gaurav.khanna@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Meerut","dob":"22:11:1996","name":"Nitin Tomar","id":"tek32","department":"Support","email":"nitin.tomar@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Kolkata","dob":"09:07:1992","name":"Abhishek Roy","id":"tek33","department":"Marketing","email":"abhishek.roy@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Nashik","dob":"30:01:1999","name":"Yogesh Pawar","id":"tek34","department":"Operations","email":"yogesh.pawar@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Shimla","dob":"14:10:1993","name":"Vishal Kapoor","id":"tek35","department":"Finance","email":"vishal.kapoor@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Haridwar","dob":"27:06:1997","name":"Pradeep Chauhan","id":"tek36","department":"HR","email":"pradeep.chauhan@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Patiala","dob":"03:03:1991","name":"Sahil Oberoi","id":"tek37","department":"Sales","email":"sahil.oberoi@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Alwar","dob":"19:12:1998","name":"Lokesh Verma","id":"tek38","department":"IT","email":"lokesh.verma@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Trivandrum","dob":"11:04:1994","name":"Ajay Pillai","id":"tek39","department":"Operations","email":"ajay.pillai@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Kolhapur","dob":"08:08:1996","name":"Mahesh Patil","id":"tek40","department":"Support","email":"mahesh.patil@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Ajmer","dob":"23:02:1990","name":"Ramesh Goyal","id":"tek41","department":"Finance","email":"ramesh.goyal@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Bareilly","dob":"17:07:1998","name":"Anuj Saxena","id":"tek42","department":"Marketing","email":"anuj.saxena@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["ADMIN"],"address":"Ranchi","dob":"01:09:1993","name":"Tarun Chandra","id":"tek43","department":"IT","email":"tarun.chandra@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Guwahati","dob":"12:05:1997","name":"Kishore Das","id":"tek44","department":"HR","email":"kishore.das@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":"MANAGER","address":"Haldwani","dob":"29:11:1991","name":"Sandeep Rawat","id":"tek45","department":"Operations","email":"sandeep.rawat@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Rewa","dob":"06:06:1999","name":"Piyush Tiwari","id":"tek46","department":"Sales","email":"piyush.tiwari@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Salem","dob":"18:03:1994","name":"Naresh Venkatesh","id":"tek47","department":"Finance","email":"naresh.venkatesh@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Thrissur","dob":"25:10:1996","name":"Ashwin Menon","id":"tek48","department":"IT","email":"ashwin.menon@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["MANAGER"],"address":"Nainital","dob":"09:01:1992","name":"Dinesh Khatri","id":"tek49","department":"Support","email":"dinesh.khatri@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","role":["USER"],"address":"Moradabad","dob":"14:12:1998","name":"Rajat Saxena","id":"tek50","department":"Marketing","email":"rajat.saxena@gmail.com"},{"password":"7110eda4d09e062aa5e4a390b0a572ac0d2c0220","address":"hyderabad","role":["USER"],"dob":"19-07-2005","name":"yerra shanmuk","id":"tek51","department":"dev","email":"shanmuk@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","address":"NGRI","role":["MANAGER"],"dob":"19-7-2005","name":"Shanmk Yerra","id":"tek52","department":"Sales","email":"shannu@gmail.com"},{"password":"aafdc23870ecbcd3d557b6423a8982134e17927e","address":"Shmee","role":["USER"],"dob":"21-08-1999","name":"Shmee Shmee","id":"tek53","department":"Shmee","email":"shmee@hotmail.org"},{"password":"a75b9cb109043793526d3d3bcb55102ea0431532","address":"e","role":["USER"],"dob":"2-2-2004","name":"rr rr","id":"tek54","department":"d","email":"d@gm.com"}]
+[
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN",
+			"USER",
+			"MANAGER"
+		],
+		"address": "Bangalore",
+		"dob": "12:03:1995",
+		"name": "Aarav Sharma",
+		"id": "tek1",
+		"department": "IT",
+		"email": "aarav.sharma@gmail.com"
+	},
+	{
+		"password": "6551617436f462208d5b48e06e32f93dd73375f0",
+		"role": [
+			"USER"
+		],
+		"address": "Secundarabad",
+		"dob": "19-07-1995",
+		"name": "Rohan Verma",
+		"id": "tek2",
+		"department": "",
+		"email": "rohan.verma@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Mumbai",
+		"dob": "05:11:1992",
+		"name": "Vikram Singh",
+		"id": "tek3",
+		"department": "Finance",
+		"email": "vikram.singh@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Ahmedabad",
+		"dob": "18-02-1997",
+		"name": "Kunal Mehra",
+		"id": "tek4",
+		"department": "Sales",
+		"email": "kunal.mehta@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Kochi",
+		"dob": "09:09:1994",
+		"name": "Rahul Nair",
+		"id": "tek5",
+		"department": "IT",
+		"email": "rahul.nair@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Hyderabad",
+		"dob": "27:06:1991",
+		"name": "Suresh Rao",
+		"id": "tek6",
+		"department": "Operations",
+		"email": "suresh.rao@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Jaipur",
+		"dob": "14:02:1998",
+		"name": "Ankit Gupta",
+		"id": "tek7",
+		"department": "Marketing",
+		"email": "ankit.gupta@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Pune",
+		"dob": "30:10:1995",
+		"name": "Pranav Joshi",
+		"id": "tek8",
+		"department": "Support",
+		"email": "pranav.joshi@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Warangal",
+		"dob": "11:12:1990",
+		"name": "Arjun Reddy",
+		"id": "tek9",
+		"department": "IT",
+		"email": "arjun.reddy@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Chandigarh",
+		"dob": "03:05:1996",
+		"name": "Nikhil Bansal",
+		"id": "tek10",
+		"department": "Finance",
+		"email": "nikhil.bansal@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Nagpur",
+		"dob": "22:08:1993",
+		"name": "Amit Kulkarni",
+		"id": "tek11",
+		"department": "Operations",
+		"email": "amit.kulkarni@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Indore",
+		"dob": "17:04:1997",
+		"name": "Siddharth Jain",
+		"id": "tek12",
+		"department": "Sales",
+		"email": "siddharth.jain@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Gurgaon",
+		"dob": "29:09:1992",
+		"name": "Deepak Yadav",
+		"id": "tek13",
+		"department": "HR",
+		"email": "deepak.yadav@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Surat",
+		"dob": "06:06:1998",
+		"name": "Manish Patel",
+		"id": "tek14",
+		"department": "Marketing",
+		"email": "manish.patel@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Varanasi",
+		"dob": "19:01:1994",
+		"name": "Sanjay Mishra",
+		"id": "tek15",
+		"department": "Finance",
+		"email": "sanjay.mishra@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Bhopal",
+		"dob": "25:03:1999",
+		"name": "Harsh Agrawal",
+		"id": "tek16",
+		"department": "IT",
+		"email": "harsh.agrawal@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Chennai",
+		"dob": "08:07:1991",
+		"name": "Naveen Kumar",
+		"id": "tek17",
+		"department": "Support",
+		"email": "naveen.kumar@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Udaipur",
+		"dob": "16:10:1996",
+		"name": "Pankaj Soni",
+		"id": "tek18",
+		"department": "Operations",
+		"email": "pankaj.soni@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Ludhiana",
+		"dob": "02:12:1993",
+		"name": "Ritesh Malhotra",
+		"id": "tek19",
+		"department": "Sales",
+		"email": "ritesh.malhotra@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Amritsar",
+		"dob": "28:05:1997",
+		"name": "Mohit Chawla",
+		"id": "tek20",
+		"department": "HR",
+		"email": "mohit.chawla@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Coimbatore",
+		"dob": "13:09:1990",
+		"name": "Aditya Iyer",
+		"id": "tek21",
+		"department": "IT",
+		"email": "aditya.iyer@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Noida",
+		"dob": "24:02:1998",
+		"name": "Varun Saxena",
+		"id": "tek22",
+		"department": "Finance",
+		"email": "varun.saxena@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Madurai",
+		"dob": "07:11:1994",
+		"name": "Karthik Subramanian",
+		"id": "tek23",
+		"department": "Operations",
+		"email": "karthik.subramanian@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Vijayawada",
+		"dob": "15:06:1996",
+		"name": "Ravi Teja",
+		"id": "tek24",
+		"department": "Support",
+		"email": "ravi.teja@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Prayagraj",
+		"dob": "01:01:1992",
+		"name": "Shubham Pandey",
+		"id": "tek25",
+		"department": "Marketing",
+		"email": "shubham.pandey@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Panipat",
+		"dob": "04:04:1999",
+		"name": "Neeraj Arora",
+		"id": "tek26",
+		"department": "Sales",
+		"email": "neeraj.arora@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Lucknow",
+		"dob": "20:08:1993",
+		"name": "Alok Srivastava",
+		"id": "tek27",
+		"department": "HR",
+		"email": "alok.srivastava@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Mangalore",
+		"dob": "10:12:1997",
+		"name": "Rohit Shetty",
+		"id": "tek28",
+		"department": "Finance",
+		"email": "rohit.shetty@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Aurangabad",
+		"dob": "26:03:1991",
+		"name": "Sunil Deshmukh",
+		"id": "tek29",
+		"department": "Operations",
+		"email": "sunil.deshmukh@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Ujjain",
+		"dob": "18:09:1998",
+		"name": "Aakash Malviya",
+		"id": "tek30",
+		"department": "IT",
+		"email": "aakash.malviya@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Dehradun",
+		"dob": "05:05:1994",
+		"name": "Gaurav Khanna",
+		"id": "tek31",
+		"department": "Sales",
+		"email": "gaurav.khanna@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Meerut",
+		"dob": "22:11:1996",
+		"name": "Nitin Tomar",
+		"id": "tek32",
+		"department": "Support",
+		"email": "nitin.tomar@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Kolkata",
+		"dob": "09:07:1992",
+		"name": "Abhishek Roy",
+		"id": "tek33",
+		"department": "Marketing",
+		"email": "abhishek.roy@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Nashik",
+		"dob": "30:01:1999",
+		"name": "Yogesh Pawar",
+		"id": "tek34",
+		"department": "Operations",
+		"email": "yogesh.pawar@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Shimla",
+		"dob": "14:10:1993",
+		"name": "Vishal Kapoor",
+		"id": "tek35",
+		"department": "Finance",
+		"email": "vishal.kapoor@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Haridwar",
+		"dob": "27:06:1997",
+		"name": "Pradeep Chauhan",
+		"id": "tek36",
+		"department": "HR",
+		"email": "pradeep.chauhan@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Patiala",
+		"dob": "03:03:1991",
+		"name": "Sahil Oberoi",
+		"id": "tek37",
+		"department": "Sales",
+		"email": "sahil.oberoi@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Alwar",
+		"dob": "19:12:1998",
+		"name": "Lokesh Verma",
+		"id": "tek38",
+		"department": "IT",
+		"email": "lokesh.verma@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Trivandrum",
+		"dob": "11:04:1994",
+		"name": "Ajay Pillai",
+		"id": "tek39",
+		"department": "Operations",
+		"email": "ajay.pillai@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Kolhapur",
+		"dob": "08:08:1996",
+		"name": "Mahesh Patil",
+		"id": "tek40",
+		"department": "Support",
+		"email": "mahesh.patil@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Ajmer",
+		"dob": "23:02:1990",
+		"name": "Ramesh Goyal",
+		"id": "tek41",
+		"department": "Finance",
+		"email": "ramesh.goyal@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Bareilly",
+		"dob": "17:07:1998",
+		"name": "Anuj Saxena",
+		"id": "tek42",
+		"department": "Marketing",
+		"email": "anuj.saxena@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Ranchi",
+		"dob": "01:09:1993",
+		"name": "Tarun Chandra",
+		"id": "tek43",
+		"department": "IT",
+		"email": "tarun.chandra@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Guwahati",
+		"dob": "12:05:1997",
+		"name": "Kishore Das",
+		"id": "tek44",
+		"department": "HR",
+		"email": "kishore.das@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": "MANAGER",
+		"address": "Haldwani",
+		"dob": "29:11:1991",
+		"name": "Sandeep Rawat",
+		"id": "tek45",
+		"department": "Operations",
+		"email": "sandeep.rawat@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Rewa",
+		"dob": "06:06:1999",
+		"name": "Piyush Tiwari",
+		"id": "tek46",
+		"department": "Sales",
+		"email": "piyush.tiwari@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Salem",
+		"dob": "18:03:1994",
+		"name": "Naresh Venkatesh",
+		"id": "tek47",
+		"department": "Finance",
+		"email": "naresh.venkatesh@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Thrissur",
+		"dob": "25:10:1996",
+		"name": "Ashwin Menon",
+		"id": "tek48",
+		"department": "IT",
+		"email": "ashwin.menon@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Nainital",
+		"dob": "09:01:1992",
+		"name": "Dinesh Khatri",
+		"id": "tek49",
+		"department": "Support",
+		"email": "dinesh.khatri@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"role": [
+			"USER"
+		],
+		"address": "Moradabad",
+		"dob": "14:12:1998",
+		"name": "Rajat Saxena",
+		"id": "tek50",
+		"department": "Marketing",
+		"email": "rajat.saxena@gmail.com"
+	},
+	{
+		"password": "7110eda4d09e062aa5e4a390b0a572ac0d2c0220",
+		"address": "hyderabad",
+		"role": [
+			"USER"
+		],
+		"dob": "19-07-2005",
+		"name": "yerra shanmuk",
+		"id": "tek51",
+		"department": "dev",
+		"email": "shanmuk@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"address": "NGRI",
+		"role": [
+			"MANAGER"
+		],
+		"dob": "19-7-2005",
+		"name": "Shanmk Yerra",
+		"id": "tek52",
+		"department": "Sales",
+		"email": "shannu@gmail.com"
+	},
+	{
+		"password": "aafdc23870ecbcd3d557b6423a8982134e17927e",
+		"address": "Shmee",
+		"role": [
+			"USER"
+		],
+		"dob": "21-08-1999",
+		"name": "Shmee Shmee",
+		"id": "tek53",
+		"department": "Shmee",
+		"email": "shmee@hotmail.org"
+	},
+	{
+		"password": "a75b9cb109043793526d3d3bcb55102ea0431532",
+		"address": "e",
+		"role": [
+			"USER"
+		],
+		"dob": "2-2-2004",
+		"name": "rr rr",
+		"id": "tek54",
+		"department": "d",
+		"email": "d@gm.com"
+	}
+]
