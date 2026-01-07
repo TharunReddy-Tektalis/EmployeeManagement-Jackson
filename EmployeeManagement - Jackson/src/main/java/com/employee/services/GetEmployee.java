@@ -9,13 +9,15 @@ import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDAOImpl;
 import com.employee.dao.ServerSideValidations;
 import com.employee.exception.EmployeeDoesNotExistException;
+import com.employee.main.EmployeeApp;
 import com.employee.util.EmployeeUtil;
 
 public class GetEmployee {
 
 	JSONParser parser = new JSONParser();
 	EmployeeDAO dao = new EmployeeDAOImpl();
-	public final File file = new File("src/main/resources/employeeDetails.json");
+	File file= EmployeeApp.file;
+
 
 	public void get_all() {
 

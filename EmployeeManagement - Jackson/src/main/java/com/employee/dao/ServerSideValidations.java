@@ -1,5 +1,6 @@
 package com.employee.dao;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Comparator;
@@ -9,25 +10,32 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.employee.main.EmployeeApp;
 import com.employee.services.GetEmployee;
 import com.employee.util.EmployeeUtil;
 
 public class ServerSideValidations {	
 	public static String role;
 	public static String id;
-	
+	public static File file= EmployeeApp.file;
 	public static boolean validateLogin(String id, String password) {
 		GetEmployee getEmployee = new GetEmployee();
 		EmployeeUtil util = new EmployeeUtil();
 		
+
 		JSONParser parser = new JSONParser();
-		if (!getEmployee.file.exists() || getEmployee.file.length() <=2) { // If no Records
+		if (!file.exists() ) { // If no Records
+			System.out.println("Unable to read file");
+			System.out.println();
+			return false;
+		}
+		else if(file.length() <=2) {
 			System.out.println("No login records");
 			System.out.println();
 			return false;
 		}
 		try {
-			Object loginData = parser.parse(new FileReader(getEmployee.file));
+			Object loginData = parser.parse(new FileReader(file));
 			JSONArray array = (JSONArray) loginData;
 
 			String hashPassword = util.hash(password);
@@ -73,7 +81,7 @@ public class ServerSideValidations {
 		JSONParser parser = new JSONParser();
 
 		try {
-			Object empData = parser.parse(new FileReader(viewEmployees.file));
+			Object empData = parser.parse(new FileReader(file));
 			JSONArray array = (JSONArray) empData;
 
 			for (Object obj : array) { // Traverse through JSON Array
@@ -97,7 +105,7 @@ public class ServerSideValidations {
 
 		try {
 			JSONParser parser = new JSONParser();
-			Object empData = parser.parse(new FileReader(readEmployees.file));
+			Object empData = parser.parse(new FileReader(file));
 			JSONArray array = (JSONArray) empData;
 
 			int len = array.size(); // JSON Array length

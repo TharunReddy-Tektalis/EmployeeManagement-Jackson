@@ -10,13 +10,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.employee.main.EmployeeApp;
 import com.employee.services.EmployeeLogin;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
 //	GetEmployee getEmployee = new GetEmployee();
 	ServerSideValidations validations = new ServerSideValidations();
-	public final File file = new File("src/main/resources/employeeDetails.json");
+//	EmployeeApp emp = new EmployeeApp();
+	File file= EmployeeApp.file;
 	JSONParser parser = new JSONParser();
 
 	private void printEmployee(JSONObject jsonObject) {
