@@ -1,111 +1,84 @@
 package com.employee.util;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import com.employee.enums.EMSRoles;
-import com.employee.model.Employee;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.employee.services.GetEmployee;
 
 public class EmployeeUtil {
-	Employee employee = new Employee();
+	public boolean checkEmployee(String checkId) {
+
+		GetEmployee viewEmployees = new GetEmployee();
+		JSONParser parser = new JSONParser();
+
+		try {
+			Object empData = parser.parse(new FileReader(viewEmployees.file));
+			JSONArray array = (JSONArray) empData;
+
+			for (Object obj : array) { // Traverse through JSON Array
+				JSONObject jsonObject = (JSONObject) obj;
+				String id = (String) jsonObject.get("id");
+				if (id.equals(checkId)) {
+					return true;
+				}
+			}
+			return false;
+		} catch (IOException e) {
+			System.out.println("Error");
+		} catch (ParseException e) {
+			System.out.println("Parser Error");
+		}
+		return false;
+	}
+	
+	
 	public String hash(String password) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-1");
-
+			
 			byte[] messageDigest = md.digest(password.getBytes());
-
-			BigInteger no = new BigInteger(1, messageDigest);
+			
+			BigInteger no = new BigInteger(1,messageDigest);
 			String hashPassword = no.toString(16);
-
+			
 			return hashPassword;
-		} catch (NoSuchAlgorithmException e) {
+		}
+		catch(NoSuchAlgorithmException e) {
 			System.out.println("Error in hashing password");
 			return "";
 		}
 	}
+	
+	
+	public String genId() {
+		GetEmployee readEmployees = new GetEmployee();
 
-	public boolean validateID(String id) {
-		Pattern idPattern = Pattern.compile("tek\\d{1,}");
-		Matcher matcher= idPattern.matcher(id);
-		if(matcher.matches()) {
-			employee.setId(id);
-			return true;
-		}
-		System.out.println("Invalid ID format");
-		return false;
-	}
-
-	public boolean validateName(String name) {
-		if(name==null || name.trim().isEmpty()) {
-			System.out.println("Invalid Name format");
-			return false;
-		}
-		employee.setName(name);
-		return true;
-	}
-
-	public boolean validateDept(String dept) {
-		if(dept==null || dept.trim().isEmpty()) {
-			System.out.println("Invalid Department format");
-			return false;
-		}
-		employee.setDept(dept);
-		return true;
-	}
-
-	public boolean validateDOB(String DOB) {
-		Pattern dobPattern = Pattern.compile("(0[1-9]|[12][0-9]|3[01])\\-(0[1-9]|1[0-2])\\-\\d{4}");
-		Matcher matcher = dobPattern.matcher(DOB);
-		if(matcher.matches()) {
-			employee.setDOB(DOB);
-			return true;
-		}
-		System.out.println("Invalid DOB format");
-		return false;
-	}
-
-	public boolean validateAddress(String address) {
-		if(address==null || address.trim().isEmpty()) {
-			System.out.println("Invalid address format");
-			return false;
-		}
-		employee.setDept(address);
-		return true;
-	}
-
-	public boolean validateEmail(String email) {
-		Pattern emailPattern = Pattern.compile("[A-Za-z0-9.]+@[A-Za-z0-9.]+\\.[A-za-z]{2,}");
-		Matcher matcher = emailPattern.matcher(email);
-		if(matcher.matches()) {
-			employee.setEmail(email);
-			return true;
-		}
-		System.out.println("Invalid Email format");
-		return false;
-	}
-
-	public boolean validateRole(String role) {
 		try {
-			EMSRoles choice;
-			choice = EMSRoles.valueOf(role.toUpperCase());
-			employee.setRole(role);
-			return true;
-		}
-		catch (IllegalArgumentException e) {
-			System.out.println("Invalid Role");
-		}
-		return false;
-	}
+			JSONParser parser = new JSONParser();
+			Object empData = parser.parse(new FileReader(readEmployees.file));
+			JSONArray array = (JSONArray) empData;
 
-	public boolean validatePassword(String password) {
-		if(password==null || password.trim().isEmpty()) {
-			System.out.println("Invalid password format");
-			return false;
+			int len = array.size(); // JSON Array length
+			if (len >= 1) { // Employees exists
+				JSONObject jsonObject = (JSONObject) array.get(len - 1);
+				String id = (String) jsonObject.get("id"); // Get last employee ID
+				int suffix = Integer.parseInt(id.substring(3));
+				suffix = suffix + 1;
+				return "tek" + suffix; // New id returned
+			}
+		} catch (ParseException e) {
+			System.out.println("Parser error");
+		} catch (IOException e) {
+			System.out.println("Error writing to the file");
 		}
-		employee.setPassword(password);
-		return true;
+		return "tek1"; // Default ID when there are no RECORDS
 	}
 }

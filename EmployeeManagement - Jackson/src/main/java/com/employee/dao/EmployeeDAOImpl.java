@@ -10,15 +10,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.employee.main.EmployeeApp;
-import com.employee.services.EmployeeLogin;
+import com.employee.controller.LoginController;
+import com.employee.services.CheckLogin;
+import com.employee.services.GetEmployee;
+import com.employee.util.EmployeeUtil;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
 //	GetEmployee getEmployee = new GetEmployee();
-	ServerSideValidations validations = new ServerSideValidations();
-//	EmployeeApp emp = new EmployeeApp();
-	File file= EmployeeApp.file;
+	EmployeeUtil util = new EmployeeUtil();
+	private static final File file = new File("src/main/resources/employeeDetails.json");
 	JSONParser parser = new JSONParser();
 
 	private void printEmployee(JSONObject jsonObject) {
@@ -47,7 +48,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public void addEmployee(String name, String dept, String DOB, String address, String email, JSONArray rolesArray,
 			String hashPassword) {
 		try {
-			String id = validations.genId(); // AUTO INCREMENT ID Method
+			String id = util.genId(); // AUTO INCREMENT ID Method
 			JSONArray array = getDataFromFile();
 
 			JSONObject jsonObject = new JSONObject();
@@ -78,7 +79,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				JSONObject jsonObject = (JSONObject) object;
 				if (jsonObject.get("id").equals((String) id)) {
 					jsonObject.put("name", name); // Add Name into JSON Object
-					if (ServerSideValidations.role != "USER") {
+					if (CheckLogin.role != "USER") {
 						jsonObject.put("department", dept); // Add Dept into JSON Object
 					}
 					jsonObject.put("dob", DOB); // Add Name into JSON Object
@@ -160,7 +161,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 					jsonObject.replace("password", password);
 					System.out.println("Successfully changed password");
 					saveToFile(array);
-					EmployeeLogin.loginCheck();
+					LoginController.loginCheck();
 					break;
 				}
 			}

@@ -1,23 +1,26 @@
 package com.employee.services;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDAOImpl;
-import com.employee.dao.ServerSideValidations;
 import com.employee.exception.EmployeeDoesNotExistException;
-import com.employee.main.EmployeeApp;
+import com.employee.exception.InvalidIDException;
 import com.employee.util.EmployeeUtil;
 
 public class GetEmployee {
 
 	JSONParser parser = new JSONParser();
 	EmployeeDAO dao = new EmployeeDAOImpl();
-	File file= EmployeeApp.file;
-
+	public static final File file = new File("src/main/resources/employeeDetails.json");
 
 	public void get_all() {
 
@@ -30,18 +33,16 @@ public class GetEmployee {
 	}
 
 	public void get_by_id() {
-		ServerSideValidations validations = new ServerSideValidations();
 		EmployeeUtil util = new EmployeeUtil();
 		Scanner sc = new Scanner(System.in);
 		String id;
-		if (ServerSideValidations.role.equals("USER")) {
-			id = ServerSideValidations.id;
+		if (CheckLogin.role.equals("USER")) {
+			id = CheckLogin.id;
 		} else {
 			System.out.println("Enter emp id:");
 			id = sc.next();
-			if(!util.validateID(id)) return;
 		}
-		boolean present = validations.checkEmployee(id);
+		boolean present = util.checkEmployee(id);
 
 		if (present) {
 			dao.viewEmployee_by_id(id);

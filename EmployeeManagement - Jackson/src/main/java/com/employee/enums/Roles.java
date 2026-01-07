@@ -1,7 +1,7 @@
 package com.employee.enums;
 
 
-public enum EMSRoles { // ENUM class with OPERATIONS
+public enum Roles { // ENUM class with OPERATIONS
 	ADMIN,
 	MANAGER,
 	USER

@@ -1,12 +1,11 @@
 package com.employee.enums;
 
-public enum EMSOperations {
+public enum AdminChoices {
 	ADD,
 	VIEW,
 	DELETE,
 	UPDATE,
 	VIEW_BY_ID,
-	CHANGE_PASSWORD,
 	RESET_PASSWORD,
 	GRANT_ROLE,
 	REVOKE_ROLE,

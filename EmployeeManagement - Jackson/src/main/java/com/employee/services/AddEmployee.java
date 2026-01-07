@@ -27,12 +27,12 @@ public class AddEmployee {
 		String lname = sc.next();
 		String name = fname + " " + lname;
 		sc.nextLine();
-		if(!util.validateName(name)) return;
+		employee.setName(name);
 
 		System.out.print("Enter emp dept:");
 		String dept = sc.next();
 		sc.nextLine();
-		if(!util.validateDept(dept)) return;
+		employee.setDept(dept);
 
 		System.out.print("Enter emp date in DOB:");
 		String day = sc.next();
@@ -47,27 +47,27 @@ public class AddEmployee {
 		sc.nextLine();
 
 		String DOB = day + "-" + month + "-" + year;
-		if(!util.validateDOB(DOB)) return;
+		employee.setDOB(DOB);
 
 		System.out.print("Enter emp address:");
 		String address = sc.nextLine();
-		if(!util.validateAddress(address)) return;
+		employee.setAddress(address);
 
 		System.out.print("Enter emp email:");
 		String email = sc.next();
 		sc.nextLine();
-		if(!util.validateEmail(email)) return;
+		employee.setEmail(email);
 
 		System.out.print("Enter emp role:");
 		String role = sc.next();
 		sc.nextLine();
 
 		JSONArray rolesArray = new JSONArray();
-		if(!util.validateRole(role)) return;
+		employee.setRole(role);
 		rolesArray.add(role);
 
 		String password = PasswordOperations.defaultPass;
-		if(!util.validatePassword(password)) return;
+		employee.setPassword(password);
 		String hashPassword = util.hash(password);
 
 		dao.addEmployee(name,dept,DOB,address,email,rolesArray,hashPassword);
