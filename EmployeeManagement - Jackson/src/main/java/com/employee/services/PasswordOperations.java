@@ -6,29 +6,37 @@ import org.json.simple.parser.JSONParser;
 
 import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.ServerSideValidations;
 import com.employee.util.EmployeeUtil;
 
 public class PasswordOperations {
 	EmployeeDAO dao = new EmployeeDAOImpl();
-	GetEmployee getEmployee = new GetEmployee();
+	ViewEmpDetails getEmployee = new ViewEmpDetails();
 	EmployeeUtil util = new EmployeeUtil();
-	public static String defaultPass = "pass123";
 
 	public void changePassword() {
-		String id = CheckLogin.id;
+		String id = ServerSideValidations.id;
 		Scanner sc = new Scanner(System.in);
 
 		System.out.print("Enter new password:");
 		String password = sc.next();
 		sc.nextLine();
+		if (!util.validatePassword(password))
+			return;
 
 		System.out.print("Re-Enter new password:");
-		String samePassword = sc.next();
+		String reEnterPassword = sc.next();
 		sc.nextLine();
+		if (!util.validatePassword(password))
+			return;
 
-		if (password.equals(samePassword)) {
-			String hashPassword = util.hash(password);
-			dao.changePassword(id, hashPassword);
+		if (password.equals(reEnterPassword)) {
+			if (util.validatePasswordFormat(password)) {
+				String hashPassword = util.generateHash(password);
+				dao.changePassword(id, hashPassword);
+			} else {
+				System.out.println("Invalid Password Format");
+			}
 		} else {
 			System.out.println("Passwords donot match");
 		}
@@ -36,13 +44,15 @@ public class PasswordOperations {
 
 	public void resetPassword() {
 		JSONParser parser = new JSONParser();
-		GetEmployee getEmployee = new GetEmployee();
+		ViewEmpDetails getEmployee = new ViewEmpDetails();
 		EmployeeUtil util = new EmployeeUtil();
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Enter employee id to reset password:");
 		String id = sc.next();
 		sc.nextLine();
-		String hashPassword = util.hash(defaultPass);
+		String defPassword = util.generateRandomPassword();
+		System.out.println("Newly Reset Password :" + defPassword);
+		String hashPassword = util.generateHash(defPassword);
 		dao.resetPassword(id, hashPassword);
 	}
 }

@@ -2,115 +2,75 @@ package com.employee.controller;
 
 import java.util.Scanner;
 
-import com.employee.enums.AdminChoices;
-import com.employee.enums.ManagerChoices;
-import com.employee.enums.UserChoices;
-import com.employee.services.AddEmployee;
-import com.employee.services.ChangeRole;
-import com.employee.services.CheckLogin;
+import com.employee.dao.ServerSideValidations;
+import com.employee.enums.EMSOperations;
+import com.employee.enums.EMSRoles;
+import com.employee.enums.RolePermission;
+import com.employee.services.AddEmpDetails;
+import com.employee.services.ChangeEmpRole;
 import com.employee.services.DeleteEmployee;
-import com.employee.services.GetEmployee;
+import com.employee.services.EmployeeLogin;
+import com.employee.services.ViewEmpDetails;
 import com.employee.services.PasswordOperations;
-import com.employee.services.UpdateEmployee;
+import com.employee.services.UpdateEmpDetails;
 
 public class MenuController {
+
 	public static void displayMenu() {
-		if (LoginController.loginCheck()) {
-			GetEmployee readEmployees = new GetEmployee();
-			DeleteEmployee deleteEmployees = new DeleteEmployee();
-			UpdateEmployee updateEmployees = new UpdateEmployee();
-			PasswordOperations passwordOperations = new PasswordOperations();
-			AddEmployee addEmployee = new AddEmployee();
-			ChangeRole changeRole = new ChangeRole();
- 			
-			boolean exit = false;
-			String role = CheckLogin.role;
+		ViewEmpDetails viewEmpDetails = new ViewEmpDetails();
+		DeleteEmployee deleteEmployees = new DeleteEmployee();
+		UpdateEmpDetails updateEmployees = new UpdateEmpDetails();
+		PasswordOperations passwordOperations = new PasswordOperations();
+		AddEmpDetails addEmployee = new AddEmpDetails();
+		ChangeEmpRole changeRole = new ChangeEmpRole();
+		RolePermission rolePermission = new RolePermission();
+		if (EmployeeLogin.empLoginCheck()) {
+
+			String role = ServerSideValidations.role;
 
 			Scanner sc = new Scanner(System.in);
 			System.out.println();
 			System.out.println("EMPLOYEE MANAGEMENT SYSTEM");
 			System.out.println();
-			while (!exit) { // Runs until user wants to EXIT
-				if (role.equals("ADMIN")) {
-					System.out.println("ADMIN Operations");
+
+			
+			while (true) {
+				for (EMSOperations op : EMSOperations.values()) {
+					if (rolePermission.hasAccess(role, op)) {
+						System.out.println(op);
+					}
+				}
+				try {
 					System.out.println();
-					
-					for (AdminChoices c : AdminChoices.values()) { // Looping through ENUM Constants
-						System.out.println(c);
-					}
-					
-					AdminChoices choice;
-					try {
-						System.out.println();
-						System.out.print("Type your Choice:");
-						String input = sc.next();
+					System.out.print("Type your Choice:");
+					String input = sc.next().toUpperCase();
+					EMSOperations choice;
+					choice = EMSOperations.valueOf(input); // Checking whether user entered correct ENUM
 
-						choice = AdminChoices.valueOf(input.toUpperCase()); // Checking whether user entered correct
-																			// ENUM
-						switch (choice) {
-							case ADD -> addEmployee.insert();
-							case VIEW -> readEmployees.get_all();
-							case DELETE -> deleteEmployees.delete();
-							case UPDATE -> updateEmployees.update();
-							case VIEW_BY_ID -> readEmployees.get_by_id(); // Function call
-							case RESET_PASSWORD -> passwordOperations.resetPassword();							
-							case GRANT_ROLE -> changeRole.grantRole();	
-							case REVOKE_ROLE -> changeRole.revokeRole();							
-							case EXIT -> exit = true;
-						}
-					} catch (IllegalArgumentException e) { // Catching exception
-						System.out.println("Invalid choice");
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.ADD)
+						addEmployee.addEmp();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.VIEW)
+						viewEmpDetails.viewAllEmp();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.DELETE)
+						deleteEmployees.deleteEmp();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.UPDATE)
+						updateEmployees.updateEmp();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.VIEW_BY_ID)
+						viewEmpDetails.viewEmpByID();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.CHANGE_PASSWORD)
+						passwordOperations.changePassword();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.RESET_PASSWORD)
+						passwordOperations.resetPassword();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.GRANT_ROLE)
+						changeRole.grantEmpRole();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.REVOKE_ROLE)
+						changeRole.revokeEmpRole();
+					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.EXIT) {
+						System.out.println("Exited Employee Management System");
+						break;
 					}
-				} else if (role.equals("MANAGER")) {
-					System.out.println("MANAGER Operations");
-					System.out.println();
-					
-					for (ManagerChoices c : ManagerChoices.values()) { // Looping through ENUM Constants
-						System.out.println(c);
-					}
-
-					ManagerChoices choice;
-					try {
-						System.out.println();
-						System.out.print("Type your Choice:");
-						String input = sc.next();
-						
-						choice = ManagerChoices.valueOf(input.toUpperCase()); // Checking whether user entered correct
-																				// ENUM
-						switch (choice) {
-							case VIEW -> readEmployees.get_all(); // DISPLAYS ALL Records Operation	
-							case UPDATE -> updateEmployees.update();	
-							case VIEW_BY_ID -> readEmployees.get_by_id(); // Function call
-							case EXIT -> exit = true;
-						}
-					} catch (IllegalArgumentException e) { // Catching exception
-						System.out.println("Invalid choice");
-					}
-				} else {
-					System.out.println("USER Operations");
-					System.out.println();
-					
-					for (UserChoices c : UserChoices.values()) { // Looping through ENUM Constants
-						System.out.println(c);
-					}
-		
-					UserChoices choice;
-					try {
-						System.out.println();
-						System.out.print("Type your Choice:");
-						String input = sc.next();
-
-						choice = UserChoices.valueOf(input.toUpperCase()); // Checking whether user entered correct ENUM
-
-						switch (choice) {
-							case VIEW -> readEmployees.get_by_id();
-							case CHANGE_PASSWORD -> passwordOperations.changePassword();
-							case UPDATE -> updateEmployees.update();
-							case EXIT -> exit = true;
-						}
-					} catch (IllegalArgumentException e) { // Catching exception
-						System.out.println("Invalid choice");
-					}
+				} catch (IllegalArgumentException e) { // Catching exception
+					System.out.println("Invalid Menu Choice");
 				}
 			}
 		}

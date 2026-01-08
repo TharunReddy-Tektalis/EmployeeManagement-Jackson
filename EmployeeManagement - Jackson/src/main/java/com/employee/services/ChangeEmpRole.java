@@ -1,62 +1,58 @@
 package com.employee.services;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.ServerSideValidations;
 import com.employee.model.Employee;
 import com.employee.util.EmployeeUtil;
 
-public class ChangeRole {
+public class ChangeEmpRole {
 	EmployeeDAO dao = new EmployeeDAOImpl();
-	EmployeeUtil util = new EmployeeUtil();
+	ServerSideValidations validations = new ServerSideValidations();
 	JSONParser parser = new JSONParser();
-	Employee employee = new Employee();
-	GetEmployee getEmployee = new GetEmployee();
+	EmployeeUtil util = new EmployeeUtil();
+	ViewEmpDetails getEmployee = new ViewEmpDetails();
 	Scanner sc = new Scanner(System.in);
-	
-	public void grantRole() {	
+
+	public void grantEmpRole() {
 		System.out.print("Enter emp id to grant role:");
 		String id = sc.next();
-		employee.setId(id);
-		boolean present = util.checkEmployee(id);
-		
-		if(present) {
+		if (!util.validateID(id))
+			return;
+
+		if (validations.checkEmpExists(id)) {
 			System.out.print("Enter new role:");
 			String role = sc.next();
 			sc.nextLine();
-			employee.setRole(role);
+			if (!util.validateRole(role))
+				return;
 
 			dao.grantRole(id, role);
-		}
-		else {
+		} else {
 			System.out.println("Employee doesn't exist");
 		}
 	}
 
-	public void revokeRole() {
+	public void revokeEmpRole() {
 
 		System.out.print("Enter emp id to revoke role:");
 		String id = sc.next();
-		employee.setId(id);
-		boolean present = util.checkEmployee(id);
-		if(present) {
+		if (!util.validateID(id))
+			return;
+		
+		if (validations.checkEmpExists(id)) {
 			System.out.print("Enter role to revoke:");
 			String role = sc.next();
 			sc.nextLine();
-			employee.setRole(role);
-			
+			if (!util.validateRole(role))
+				return;
+
 			dao.revokeRole(id, role);
-		}
-		else {
+		} else {
 			System.out.println("Employee doesn't exist");
 		}
 	}

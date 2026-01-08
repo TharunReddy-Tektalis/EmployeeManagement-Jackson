@@ -9,11 +9,11 @@ import com.employee.dao.EmployeeDAOImpl;
 import com.employee.model.Employee;
 import com.employee.util.EmployeeUtil;
 
-public class AddEmployee {
+public class AddEmpDetails {
 
-	public void insert() { // INSERT Operation
+	public void addEmp() { // INSERT Operation
 
-		GetEmployee getEmployee = new GetEmployee();
+		ViewEmpDetails getEmployee = new ViewEmpDetails();
 		EmployeeDAO dao = new EmployeeDAOImpl();
 		EmployeeUtil util = new EmployeeUtil();
 		Employee employee = new Employee();
@@ -27,51 +27,59 @@ public class AddEmployee {
 		String lname = sc.next();
 		String name = fname + " " + lname;
 		sc.nextLine();
-		employee.setName(name);
+		if (!util.validateName(name))
+			return;
 
 		System.out.print("Enter emp dept:");
 		String dept = sc.next();
 		sc.nextLine();
-		employee.setDept(dept);
+		if (!util.validateDept(dept))
+			return;
 
 		System.out.print("Enter emp date in DOB:");
-		String day = sc.next();
+		int day = sc.nextInt();
 		sc.nextLine();
 
 		System.out.print("Enter emp month in  DOB:");
-		String month = sc.next();
+		int month = sc.nextInt();
 		sc.nextLine();
 
 		System.out.print("Enter emp year in DOB:");
-		String year = sc.next();
+		int year = sc.nextInt();
 		sc.nextLine();
 
 		String DOB = day + "-" + month + "-" + year;
-		employee.setDOB(DOB);
+		if (!util.validateDOB(day, month, year))
+			return;
 
 		System.out.print("Enter emp address:");
 		String address = sc.nextLine();
-		employee.setAddress(address);
+		if (!util.validateAddress(address))
+			return;
 
 		System.out.print("Enter emp email:");
 		String email = sc.next();
 		sc.nextLine();
-		employee.setEmail(email);
+		if (!util.validateEmail(email))
+			return;
 
 		System.out.print("Enter emp role:");
 		String role = sc.next();
 		sc.nextLine();
 
 		JSONArray rolesArray = new JSONArray();
-		employee.setRole(role);
+		if (!util.validateRole(role))
+			return;
 		rolesArray.add(role);
 
-		String password = PasswordOperations.defaultPass;
-		employee.setPassword(password);
-		String hashPassword = util.hash(password);
+		String password = util.generateRandomPassword();
+		System.out.println("Randomly Generated Default Password: " + password);
+		if (!util.validatePassword(password))
+			return;
+		String hashPassword = util.generateHash(password);
 
-		dao.addEmployee(name,dept,DOB,address,email,rolesArray,hashPassword);
-		
-		getEmployee.get_all();
+		dao.addEmployee(name, dept, DOB, address, email, rolesArray, hashPassword);
+
+		getEmployee.viewAllEmp();
 	}
 }

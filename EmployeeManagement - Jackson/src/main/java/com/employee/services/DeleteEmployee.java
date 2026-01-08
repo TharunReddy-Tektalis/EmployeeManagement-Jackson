@@ -12,23 +12,26 @@ import org.json.simple.parser.ParseException;
 
 import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.ServerSideValidations;
 import com.employee.exception.EmployeeDoesNotExistException;
 import com.employee.util.EmployeeUtil;
 
 public class DeleteEmployee {
-	public void delete() {
+	public void deleteEmp() {
 		EmployeeDAO dao = new EmployeeDAOImpl();
 		EmployeeUtil util = new EmployeeUtil();
-		GetEmployee getEmployee = new GetEmployee();
+		ServerSideValidations validations = new ServerSideValidations();
+		ViewEmpDetails getEmployee = new ViewEmpDetails();
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Enter empId to delete:");
 		String delId = sc.next();
-
-		boolean present = util.checkEmployee(delId); // Check employee
-		if (present) {
+		if (!util.validateID(delId))
+			return;
+                                        // Check employee
+		if (validations.checkEmpExists(delId)) {
 			dao.deleteEmployee(delId);
-			getEmployee.get_all(); // SHOW records after every operation
+			getEmployee.viewAllEmp(); // SHOW records after every operation
 		} else {
 			throw new EmployeeDoesNotExistException("Employee doesn't exist");
 		}

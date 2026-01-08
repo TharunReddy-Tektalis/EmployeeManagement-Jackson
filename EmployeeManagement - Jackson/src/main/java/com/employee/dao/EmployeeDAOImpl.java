@@ -10,16 +10,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.employee.controller.LoginController;
-import com.employee.services.CheckLogin;
-import com.employee.services.GetEmployee;
-import com.employee.util.EmployeeUtil;
+import com.employee.services.EmployeeLogin;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-//	GetEmployee getEmployee = new GetEmployee();
-	EmployeeUtil util = new EmployeeUtil();
-	private static final File file = new File("src/main/resources/employeeDetails.json");
+	ServerSideValidations validations = new ServerSideValidations();
+	public static final File file = new File("src/main/resources/employeeDetails.json");
 	JSONParser parser = new JSONParser();
 
 	private void printEmployee(JSONObject jsonObject) {
@@ -48,7 +44,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public void addEmployee(String name, String dept, String DOB, String address, String email, JSONArray rolesArray,
 			String hashPassword) {
 		try {
-			String id = util.genId(); // AUTO INCREMENT ID Method
+			String id = validations.generateAutoId(); // AUTO INCREMENT ID Method
 			JSONArray array = getDataFromFile();
 
 			JSONObject jsonObject = new JSONObject();
@@ -66,9 +62,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			saveToFile(array);
 			System.out.println("Employee inserted successfully");
 
-			 // SHOW records after every operation
+			// SHOW records after every operation
 		} catch (Exception e) {
-			System.out.println("Error");
+			System.out.println("Error in adding employee :" + e.getMessage());
 		}
 	}
 
@@ -79,7 +75,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				JSONObject jsonObject = (JSONObject) object;
 				if (jsonObject.get("id").equals((String) id)) {
 					jsonObject.put("name", name); // Add Name into JSON Object
-					if (CheckLogin.role != "USER") {
+					if (ServerSideValidations.role != "USER") {
 						jsonObject.put("department", dept); // Add Dept into JSON Object
 					}
 					jsonObject.put("dob", DOB); // Add Name into JSON Object
@@ -93,9 +89,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 					break;
 				}
 			}
-			
+
 		} catch (Exception e) {
-			System.out.println("Error");
+			System.out.println("Error in updating employee :" + e.getMessage());
 		}
 	}
 
@@ -113,11 +109,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			saveToFile(array);
 			System.out.println("Employee Deleted successfully");
 		} catch (Exception e) {
-			System.out.println("Error");
+			System.out.println("Error in deleting employee :" + e.getMessage());
 		}
 	}
 
-	public void viewEmployee() {
+	public void view_all_Employees() {
 		try {
 			JSONArray array = getDataFromFile();
 
@@ -130,7 +126,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			}
 			System.out.println();
 		} catch (Exception e) {
-			System.out.println("Error");
+			System.out.println("Error in viewing employee :" + e.getMessage());
 		}
 	}
 
@@ -147,10 +143,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Error");
+			System.out.println("Error in viewing employee by ID :" + e.getMessage());
 		}
 	}
-	
+
 	public void changePassword(String id, String password) {
 		try {
 			JSONArray array = getDataFromFile();
@@ -161,16 +157,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 					jsonObject.replace("password", password);
 					System.out.println("Successfully changed password");
 					saveToFile(array);
-					LoginController.loginCheck();
+					EmployeeLogin.empLoginCheck();
 					break;
 				}
 			}
-		}
-		catch(Exception e) {
-			System.out.println("Error");
+		} catch (Exception e) {
+			System.out.println("Error in changing employee password :" + e.getMessage());
 		}
 	}
-	
+
 	public void resetPassword(String id, String password) {
 		try {
 			JSONArray array = getDataFromFile();
@@ -179,42 +174,38 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				String currId = (String) jsonObject.get("id");
 				if (currId.equals(id)) {
 					jsonObject.replace("password", password);
-					System.out.println("Successfully changed password to default");
+					System.out.println("Successfully Reset Password");
 					saveToFile(array);
 					break;
 				}
 			}
-		}
-		catch(Exception e) {
-			System.out.println("Error");
+		} catch (Exception e) {
+			System.out.println("Error in reseting employee password :" + e.getMessage());
 		}
 	}
-	
+
 	public void grantRole(String id, String role) {
 		try {
 			JSONArray array = getDataFromFile();
-			for(Object obj : array) {
+			for (Object obj : array) {
 				JSONObject jsonObject = (JSONObject) obj;
 				String currId = (String) jsonObject.get("id");
-				if(currId.equals(id)) {
+				if (currId.equals(id)) {
 					JSONArray roleArray = (JSONArray) jsonObject.get("role");
-					if(!roleArray.contains(role)) {
+					if (!roleArray.contains(role)) {
 						roleArray.add(role);
 						saveToFile(array);
-						System.out.println("Employee Updated role");
-					}
-					else {
+						System.out.println("Updated Employee Role");
+					} else {
 						System.out.println("Cannot assign same role again");
 					}
 				}
 			}
-			
-		}
-		catch(Exception e) {
-			System.out.println("Error");
+		} catch (Exception e) {
+			System.out.println("Error in changing employee role :" + e.getMessage());
 		}
 	}
-	
+
 	public void revokeRole(String id, String role) {
 		try {
 			JSONArray array = getDataFromFile();
@@ -223,24 +214,22 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				String currId = (String) jsonObject.get("id");
 				if (currId.equals(id)) {
 					JSONArray roleArray = (JSONArray) jsonObject.get("role");
-					if(roleArray.size()>1) {
+					if (roleArray.size() > 1) {
 						if (roleArray.contains(role)) {
 							roleArray.remove(role);
 							saveToFile(array);
-							System.out.println("Revoked employee role");
-							
+							System.out.println("Revoked Employee Role");
+
 						} else {
 							System.out.println("Role doesn't exist");
 						}
-					}
-					else {
+					} else {
 						System.out.println("There is should be atleast one role");
 					}
 				}
 			}
-		}
-		catch(Exception e) {
-			System.out.println("Error");
+		} catch (Exception e) {
+			System.out.println("Error in changing employee role :" + e.getMessage());
 		}
 	}
 }
