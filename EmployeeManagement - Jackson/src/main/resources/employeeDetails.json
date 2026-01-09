@@ -1,6 +1,6 @@
 [
 	{
-		"password": "9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c",
+		"password": "a91878a94357e9a8082a2dee1b070ad7408c76e224e643b76a7690bbe47241c7",
 		"role": [
 			"ADMIN",
 			"USER",
@@ -14,7 +14,7 @@
 		"email": "aarav.sharma@gmail.com"
 	},
 	{
-		"password": "a3faf5bd944ac4615e0b43d85450eea7442c13ff9867b9c6d21ee9132d19c513",
+		"password": "a91878a94357e9a8082a2dee1b070ad7408c76e224e643b76a7690bbe47241c7",
 		"role": [
 			"USER"
 		],
@@ -26,7 +26,7 @@
 		"email": "rohan.verma@gmail.com"
 	},
 	{
-		"password": "9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c",
+		"password": "a91878a94357e9a8082a2dee1b070ad7408c76e224e643b76a7690bbe47241c7",
 		"role": [
 			"MANAGER"
 		],
