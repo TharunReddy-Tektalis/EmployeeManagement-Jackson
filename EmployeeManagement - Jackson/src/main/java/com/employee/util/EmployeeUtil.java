@@ -1,13 +1,20 @@
 package com.employee.util;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -158,5 +165,27 @@ public class EmployeeUtil {
 			return true;
 		}
 		return false;
+	}
+	
+	public Connection startConnection() {
+		Properties prop = new Properties();
+		try(InputStream input = new FileInputStream("src/main/resources/EmsDbConfig.properties")) {
+			prop.load(input);
+			
+			String url = prop.getProperty("db.url");
+			String username = prop.getProperty("db.username");
+			String password = prop.getProperty("db.password");
+			
+			Connection conn = DriverManager.getConnection(url,username,password);
+			System.out.println("Connection to db successful...");
+			return conn;
+		}
+		catch(IOException e) {
+			System.out.println("Unable to read property file"+e.getMessage());
+		}
+		catch(SQLException e) {
+			System.out.println("Unable to connect to DB"+e.getMessage());
+		}
+		return null;
 	}
 }

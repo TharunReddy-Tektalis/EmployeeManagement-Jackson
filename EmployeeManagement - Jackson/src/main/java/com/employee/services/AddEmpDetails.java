@@ -1,20 +1,21 @@
 package com.employee.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-import org.json.simple.JSONArray;
-
 import com.employee.dao.EmployeeDAO;
-import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.EmployeeFileDAOImpl;
+import com.employee.enums.EMSRoles;
 import com.employee.model.Employee;
 import com.employee.util.EmployeeUtil;
 
 public class AddEmpDetails {
 
-	public void addEmp() { // INSERT Operation
+	public void addEmp(EmployeeDAO dao) { // INSERT Operation
 
 		ViewEmpDetails getEmployee = new ViewEmpDetails();
-		EmployeeDAO dao = new EmployeeDAOImpl();
+//		EmployeeDAO dao = new EmployeeFileDAOImpl();
 		EmployeeUtil util = new EmployeeUtil();
 		Employee employee = new Employee();
 		Scanner sc = new Scanner(System.in);
@@ -67,10 +68,11 @@ public class AddEmpDetails {
 		String role = sc.next();
 		sc.nextLine();
 
-		JSONArray rolesArray = new JSONArray();
+//		JSONArray rolesArray = new JSONArray();
+		List<EMSRoles> rolesArray = new ArrayList<>();
 		if (!util.validateRole(role))
 			return;
-		rolesArray.add(role);
+		rolesArray.add(EMSRoles.valueOf(role));
 
 		String password = util.generateRandomPassword();
 		System.out.println("Randomly Generated Default Password: " + password);
@@ -80,6 +82,6 @@ public class AddEmpDetails {
 
 		dao.addEmployee(name, dept, DOB, address, email, rolesArray, hashPassword);
 
-		getEmployee.viewAllEmp();
+		getEmployee.viewAllEmp(dao);
 	}
 }

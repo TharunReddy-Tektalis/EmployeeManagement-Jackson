@@ -1,7 +1,9 @@
 package com.employee.enums;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +36,12 @@ public class RolePermission {
 				));
 	}
 	
-	public boolean hasAccess(String role, EMSOperations operation) {
-		return map.get(role).contains(operation);
+	public boolean hasAccess(List<EMSRoles>roles, EMSOperations operation) {
+		for(EMSRoles role : roles) {
+			if(map.getOrDefault(role.name(),Collections.emptySet()).contains(operation)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

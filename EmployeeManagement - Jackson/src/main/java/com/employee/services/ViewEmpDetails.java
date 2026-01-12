@@ -5,39 +5,39 @@ import java.util.Scanner;
 
 import org.json.simple.parser.JSONParser;
 
+import com.employee.controller.MenuController;
 import com.employee.dao.EmployeeDAO;
-import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.EmployeeFileDAOImpl;
 import com.employee.dao.ServerSideValidations;
+import com.employee.enums.EMSRoles;
 import com.employee.exception.EmployeeDoesNotExistException;
 import com.employee.util.EmployeeUtil;
 
 public class ViewEmpDetails {
-
-	JSONParser parser = new JSONParser();
-	EmployeeDAO dao = new EmployeeDAOImpl();
-
-	public void viewAllEmp() {
+	public void viewAllEmp(EmployeeDAO dao) {
 		dao.view_all_Employees();
 	}
 
-	public void viewEmpByID() {
+	public void viewEmpByID(EmployeeDAO dao) {
 		ServerSideValidations validations = new ServerSideValidations();
 		EmployeeUtil util = new EmployeeUtil();
 		Scanner sc = new Scanner(System.in);
 		String id;
-		if (ServerSideValidations.role.equals("USER")) {
-			id = ServerSideValidations.id;
-		} else {
+		if (MenuController.empLoginResult.getEmpRoles().contains(EMSRoles.ADMIN)
+				|| MenuController.empLoginResult.getEmpRoles().contains(EMSRoles.MANAGER)) {
 			System.out.println("Enter emp id:");
 			id = sc.next();
 			if (!util.validateID(id))
 				return;
+
+		} else {
+			id = MenuController.empLoginResult.getEmpId();
 		}
 
-		if (validations.checkEmpExists(id)) {
+//		if (validations.checkEmpExists(id)) {
 			dao.viewEmployee_by_id(id);
-		} else {
-			throw new EmployeeDoesNotExistException("Employee doesn't exist");
-		}
+//		} else {
+//			throw new EmployeeDoesNotExistException("Employee doesn't exist");
+//		}
 	}
 }

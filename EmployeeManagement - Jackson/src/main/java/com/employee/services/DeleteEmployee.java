@@ -11,14 +11,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.employee.dao.EmployeeDAO;
-import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.EmployeeFileDAOImpl;
 import com.employee.dao.ServerSideValidations;
 import com.employee.exception.EmployeeDoesNotExistException;
 import com.employee.util.EmployeeUtil;
 
 public class DeleteEmployee {
-	public void deleteEmp() {
-		EmployeeDAO dao = new EmployeeDAOImpl();
+	public void deleteEmp(EmployeeDAO dao) {
+//		EmployeeDAO dao = new EmployeeFileDAOImpl();
 		EmployeeUtil util = new EmployeeUtil();
 		ServerSideValidations validations = new ServerSideValidations();
 		ViewEmpDetails getEmployee = new ViewEmpDetails();
@@ -29,11 +29,11 @@ public class DeleteEmployee {
 		if (!util.validateID(delId))
 			return;
                                         // Check employee
-		if (validations.checkEmpExists(delId)) {
+//		if (validations.checkEmpExists(delId)) {
 			dao.deleteEmployee(delId);
-			getEmployee.viewAllEmp(); // SHOW records after every operation
-		} else {
-			throw new EmployeeDoesNotExistException("Employee doesn't exist");
-		}
+			getEmployee.viewAllEmp(dao); // SHOW records after every operation
+//		} else {
+//			throw new EmployeeDoesNotExistException("Employee doesn't exist");
+//		}
 	}
 }

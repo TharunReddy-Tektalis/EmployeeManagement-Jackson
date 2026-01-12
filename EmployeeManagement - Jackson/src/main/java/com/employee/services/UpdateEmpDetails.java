@@ -2,25 +2,35 @@ package com.employee.services;
 
 import java.util.Scanner;
 
+import com.employee.controller.MenuController;
 import com.employee.dao.EmployeeDAO;
-import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.EmployeeFileDAOImpl;
 import com.employee.dao.ServerSideValidations;
+import com.employee.enums.EMSRoles;
 import com.employee.model.Employee;
 import com.employee.util.EmployeeUtil;
 
 public class UpdateEmpDetails {
 
-	EmployeeDAO dao = new EmployeeDAOImpl();
+//	EmployeeDAO dao = new EmployeeFileDAOImpl();
 	ServerSideValidations validations = new ServerSideValidations();
 	ViewEmpDetails getEmployee = new ViewEmpDetails();
 	EmployeeUtil util = new EmployeeUtil();
 	Employee employee = new Employee();
 	Scanner sc = new Scanner(System.in);
 
-	public void updateEmp() {
+	public void updateEmp(EmployeeDAO dao) {
 		String id;
-		if (ServerSideValidations.role.equals("USER")) {
-			id = ServerSideValidations.id;
+		EMSRoles role = null;
+		if (MenuController.empLoginResult.getEmpRoles().contains(EMSRoles.ADMIN)
+				|| MenuController.empLoginResult.getEmpRoles().contains(EMSRoles.MANAGER)) {
+			role = EMSRoles.ADMIN;
+		}
+		else {
+			role = EMSRoles.USER;
+		}
+		if (role.equals(EMSRoles.USER)) {
+			id = MenuController.empLoginResult.getEmpId();
 		} else {
 			System.out.print("Enter emp id:");
 			id = sc.next();
@@ -28,10 +38,10 @@ public class UpdateEmpDetails {
 				return;
 		}
 
-		if (validations.checkEmpExists(id)) {
+//		if (validations.checkEmpExists(id)) {
 			String dept = "";
 			String name = "";
-			if (!ServerSideValidations.role.equals("USER")) {
+			if (!role.equals(EMSRoles.USER)) {
 				System.out.print("Enter emp first name:");
 				String fname = sc.next();
 				sc.nextLine();
@@ -77,14 +87,14 @@ public class UpdateEmpDetails {
 				return;
 			sc.nextLine();
 
-			dao.updateEmployee(id, name, dept, DOB, address, email);
-			if (!ServerSideValidations.role.equals("USER")) {
-				getEmployee.viewAllEmp(); // SHOW records after every operation
+			dao.updateEmployee(id, name, dept, DOB, address, email, role);
+			if (!role.equals(EMSRoles.USER)) {
+				getEmployee.viewAllEmp(dao); // SHOW records after every operation
 			} else {
-				getEmployee.viewEmpByID();
+				getEmployee.viewEmpByID(dao);
 			}
-		} else {
-			System.out.println("Employee doesn't exist");
-		}
+//		} else {
+//			System.out.println("Employee doesn't exist");
+//		}
 	}
 }

@@ -1,10 +1,13 @@
 package com.employee.dao;
 
-import org.json.simple.JSONArray;
+import java.util.List;
+
+import com.employee.enums.EMSRoles;
+import com.employee.model.EmpLoginResult;
 
 public interface EmployeeDAO {
-	void addEmployee(String name, String dept, String DOB, String address, String email, JSONArray rolesArray, String hashPassword);
-	void updateEmployee(String id,String name, String dept, String DOB, String address, String email);
+	void addEmployee(String name, String dept, String DOB, String address, String email, List<EMSRoles> rolesArray, String hashPassword);
+	void updateEmployee(String id,String name, String dept, String DOB, String address, String email, EMSRoles role);
 	void deleteEmployee(String id);
 	void view_all_Employees();
 	void viewEmployee_by_id(String id);
@@ -12,4 +15,5 @@ public interface EmployeeDAO {
 	void resetPassword(String id, String password);
 	void grantRole(String id, String role);
 	void revokeRole(String id, String role);
+	EmpLoginResult validateLogin(String id, String password);
 }

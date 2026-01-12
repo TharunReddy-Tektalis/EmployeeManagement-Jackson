@@ -4,18 +4,19 @@ import java.util.Scanner;
 
 import org.json.simple.parser.JSONParser;
 
+import com.employee.controller.MenuController;
 import com.employee.dao.EmployeeDAO;
-import com.employee.dao.EmployeeDAOImpl;
+import com.employee.dao.EmployeeFileDAOImpl;
 import com.employee.dao.ServerSideValidations;
 import com.employee.util.EmployeeUtil;
 
 public class PasswordOperations {
-	EmployeeDAO dao = new EmployeeDAOImpl();
+//	EmployeeDAO dao = new EmployeeFileDAOImpl();
 	ViewEmpDetails getEmployee = new ViewEmpDetails();
 	EmployeeUtil util = new EmployeeUtil();
 
-	public void changePassword() {
-		String id = ServerSideValidations.id;
+	public void changePassword(EmployeeDAO dao) {
+		String id = MenuController.empLoginResult.getEmpId();
 		Scanner sc = new Scanner(System.in);
 
 		System.out.print("Enter new password:");
@@ -42,7 +43,7 @@ public class PasswordOperations {
 		}
 	}
 
-	public void resetPassword() {
+	public void resetPassword(EmployeeDAO dao) {
 		JSONParser parser = new JSONParser();
 		ViewEmpDetails getEmployee = new ViewEmpDetails();
 		EmployeeUtil util = new EmployeeUtil();
