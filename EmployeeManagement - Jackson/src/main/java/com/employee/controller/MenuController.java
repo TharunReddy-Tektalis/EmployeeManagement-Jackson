@@ -71,7 +71,7 @@ public class MenuController {
 						changeRole.revokeEmpRole(dao);
 					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.EXIT) {
 						System.out.println("Exited Employee Management System");
-						break;
+						System.exit(0);
 					}
 				} catch (IllegalArgumentException e) { // Catching exception
 					System.out.println("Invalid Menu Choice");

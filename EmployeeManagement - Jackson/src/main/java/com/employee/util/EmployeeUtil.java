@@ -10,6 +10,7 @@ import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,11 +107,19 @@ public class EmployeeUtil {
 
 		try {
 			LocalDate birthDate = LocalDate.of(year, month, day);
-			String DOB = day + "-" + month + "-" + year;
-			employee.setDOB(DOB);
+			LocalDate today = LocalDate.now();
+			if (birthDate.isAfter(today)) {
+				System.out.println("Cannot give DOB in future");
+				return false;
+			}
+			if (birthDate.isBefore(today.minusYears(100))) {
+				System.out.println("Invalid DOB Year");
+				return false;
+			}
+			employee.setDOB(birthDate.toString());
 			return true;
-		} catch (Exception e) {
-			System.out.println("Incorrect DOB Format");
+		} catch (DateTimeException e) {
+			System.out.println("Incorrect DOB Format" + e.getMessage());
 			return false;
 		}
 	}
@@ -166,25 +175,23 @@ public class EmployeeUtil {
 		}
 		return false;
 	}
-	
+
 	public Connection startConnection() {
 		Properties prop = new Properties();
-		try(InputStream input = new FileInputStream("src/main/resources/EmsDbConfig.properties")) {
+		try (InputStream input = new FileInputStream("src/main/resources/EmsDbConfig.properties")) {
 			prop.load(input);
-			
+
 			String url = prop.getProperty("db.url");
 			String username = prop.getProperty("db.username");
 			String password = prop.getProperty("db.password");
-			
-			Connection conn = DriverManager.getConnection(url,username,password);
+
+			Connection conn = DriverManager.getConnection(url, username, password);
 			System.out.println("Connection to db successful...");
 			return conn;
-		}
-		catch(IOException e) {
-			System.out.println("Unable to read property file"+e.getMessage());
-		}
-		catch(SQLException e) {
-			System.out.println("Unable to connect to DB"+e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Unable to read property file" + e.getMessage());
+		} catch (SQLException e) {
+			System.out.println("Unable to connect to DB" + e.getMessage());
 		}
 		return null;
 	}

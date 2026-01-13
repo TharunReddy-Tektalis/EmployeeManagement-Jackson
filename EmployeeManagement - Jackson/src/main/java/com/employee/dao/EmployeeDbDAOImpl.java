@@ -56,13 +56,14 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	public void addEmployee(String name, String dept, String DOB, String address, String email,
 			List<EMSRoles> rolesArray, String hashPassword) {
 		try {
+			conn.setAutoCommit(false);
 			String query1 = "INSERT INTO EmpData (empName, empDept, empDOB, empAddress, empEmail) VALUES (?,?, ?, ?, ?)";
 
 			PreparedStatement pstmt = conn.prepareStatement(query1, new String[] { "empid" });
 			pstmt.setString(1, name);
 			pstmt.setString(2, dept);
 
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 			java.util.Date javaDate = sdf.parse(DOB);
 
 			java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
@@ -91,10 +92,19 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 				pstmt2.setObject(2, role.name(), java.sql.Types.OTHER);
 				pstmt2.executeUpdate();
 			}
+			
+			conn.commit();
 		} catch (ParseException e) {
 			System.out.println("Error in formatting date" + e.getMessage());
 		} catch (SQLException e) {
-			System.out.println("Error inserting into db" + e.getMessage());
+			if (conn != null) {
+		        try {
+		            System.err.println("transaction has rollback : " + e.getMessage());
+		            conn.rollback();
+		        } catch (SQLException ex) {
+		            System.err.println("Error during rollback: " + ex.getMessage());
+		        }
+		    }
 		}
 
 	}
@@ -102,13 +112,16 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	@Override
 	public void updateEmployee(String id, String name, String dept, String DOB, String address, String email,
 			EMSRoles role) {
+		
 		if (checkEmpExists(id)) {
 			String userUpdateQuery = "update empData set empDOB = ?, empAddress = ?, empEmail = ? where empId = ?";
 			String adminUpdateQuery = "update empData set empName = ?, empDept = ?, empDOB = ?, empAddress = ?, empEmail = ? where empId = ?";
 			if (role.equals(EMSRoles.USER)) {
+				
 				try {
+					conn.setAutoCommit(false);
 					PreparedStatement userPstmt = conn.prepareStatement(userUpdateQuery);
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					java.util.Date javaDate = sdf.parse(DOB);
 
 					java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
@@ -120,19 +133,29 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 					if (row != 0) {
 						System.out.println("Updated Successfully");
 					}
+					conn.commit();
 				} catch (SQLException e) {
 					System.out.println("Error while updating " + e.getMessage());
+					if (conn != null) {
+				        try {
+				            System.err.println("transaction has rollback : " + e.getMessage());
+				            conn.rollback();
+				        } catch (SQLException ex) {
+				            System.err.println("Error during rollback: " + ex.getMessage());
+				        }
+				    }
 				} catch (ParseException e) {
 					System.out.println("Error in formatting date" + e.getMessage());
 				}
 			} else {
 				try {
+					conn.setAutoCommit(false);
 					PreparedStatement adminPstmt = conn.prepareStatement(adminUpdateQuery);
 
 					adminPstmt.setString(1, name);
 					adminPstmt.setString(2, dept);
 
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					java.util.Date javaDate = sdf.parse(DOB);
 
 					java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
@@ -145,8 +168,17 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 					if (row != 0) {
 						System.out.println("Updated Successfully");
 					}
+					conn.commit();
 				} catch (SQLException e) {
 					System.out.println("Error while updating " + e.getMessage());
+					if (conn != null) {
+				        try {
+				            System.err.println("transaction has rollback : " + e.getMessage());
+				            conn.rollback();
+				        } catch (SQLException ex) {
+				            System.err.println("Error during rollback: " + ex.getMessage());
+				        }
+				    }
 				} catch (ParseException e) {
 					System.out.println("Error in formatting date" + e.getMessage());
 				}
@@ -158,6 +190,7 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	public void deleteEmployee(String id) {
 		if (checkEmpExists(id)) {
 			try {
+				conn.setAutoCommit(false);
 				String deleteQuery = "delete from empData where empId = ?";
 				PreparedStatement pstmt = conn.prepareStatement(deleteQuery);
 				pstmt.setString(1, id);
@@ -167,8 +200,17 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 				} else {
 					System.out.println("Cannot delete emplpoyee");
 				}
+				conn.commit();
 			} catch (SQLException e) {
 				System.out.println("Error deleting from db" + e.getMessage());
+				if (conn != null) {
+			        try {
+			            System.err.println("transaction has rollback : " + e.getMessage());
+			            conn.rollback();
+			        } catch (SQLException ex) {
+			            System.err.println("Error during rollback: " + ex.getMessage());
+			        }
+			    }
 			}
 		}
 	}
@@ -176,16 +218,33 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	@Override
 	public void view_all_Employees() {
 		try {
-			String viewAllQuery = "select * from empData " + "join empRole on empData.empId = empRole.empId";
+			String viewEmpDataQuery = "select * from empData";
+			String viewEmpRolesQuery = "select empRole from empRole where empId = ?";
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(viewAllQuery);
+			ResultSet rs = stmt.executeQuery(viewEmpDataQuery);
+			PreparedStatement pstmt = conn.prepareStatement(viewEmpRolesQuery);
 			while (rs.next()) {
-				System.out.println();
-				System.out.println("Emp ID: " + rs.getString("empId") + " | Name: " + rs.getString("empName")
+				String currId = rs.getString("empId");
+				pstmt.setString(1, currId);
+				ResultSet crs = pstmt.executeQuery();
+				System.out.print("Emp ID: " + rs.getString("empId") + " | Name: " + rs.getString("empName")
 						+ " | Department: " + rs.getString("empDept") + " | DOB: " + rs.getDate("empDOB")
 						+ " | Address: " + rs.getString("empAddress") + " | Email: " + rs.getString("empEmail")
-						+ " | Roles: " + rs.getString("empRole"));
+						+ " | Roles: [ ");
+				while (crs.next()) {
+					System.out.print(crs.getString("empRole") + " ");
+
+				}
+				System.out.println("]");
+				System.out.println();
 			}
+//			while (rs.next()) {
+//				System.out.println();
+//				System.out.println("Emp ID: " + rs.getString("empId") + " | Name: " + rs.getString("empName")
+//						+ " | Department: " + rs.getString("empDept") + " | DOB: " + rs.getDate("empDOB")
+//						+ " | Address: " + rs.getString("empAddress") + " | Email: " + rs.getString("empEmail")
+//						+ " | Roles: " + rs.getString("empRole"));
+//			}
 		} catch (SQLException e) {
 			System.out.println("Error reading from database " + e.getMessage());
 		}
@@ -195,18 +254,34 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	public void viewEmployee_by_id(String id) {
 		if (checkEmpExists(id)) {
 			try {
-				String viewAllQuery = "select * from empData "
-						+ "join empRole on empData.empId = empRole.empId where empData.empId = ?";
-				PreparedStatement pstmt = conn.prepareStatement(viewAllQuery);
-				pstmt.setString(1, id);
-				ResultSet rs = pstmt.executeQuery();
+				String viewEmpDataQuery = "select * from empData where empId = ?";
+				String viewEmpRolesQuery = "select empRole from empRole where empId = ?";
+				PreparedStatement stmt = conn.prepareStatement(viewEmpDataQuery);
+				stmt.setString(1, id);
+				ResultSet rs = stmt.executeQuery();
+				PreparedStatement pstmt = conn.prepareStatement(viewEmpRolesQuery);
 				while (rs.next()) {
-					System.out.println();
-					System.out.println("Emp ID: " + rs.getString("empId") + " | Name: " + rs.getString("empName")
+					String currId = rs.getString("empId");
+					pstmt.setString(1, currId);
+					ResultSet crs = pstmt.executeQuery();
+					System.out.print("Emp ID: " + rs.getString("empId") + " | Name: " + rs.getString("empName")
 							+ " | Department: " + rs.getString("empDept") + " | DOB: " + rs.getDate("empDOB")
 							+ " | Address: " + rs.getString("empAddress") + " | Email: " + rs.getString("empEmail")
-							+ " | Roles: " + rs.getString("empRole"));
+							+ " | Roles: [ ");
+					while (crs.next()) {
+						System.out.print(crs.getString("empRole") + " ");
+
+					}
+					System.out.println("]");
+					System.out.println();
 				}
+//				while (rs.next()) {
+//					System.out.println();
+//					System.out.println("Emp ID: " + rs.getString("empId") + " | Name: " + rs.getString("empName")
+//							+ " | Department: " + rs.getString("empDept") + " | DOB: " + rs.getDate("empDOB")
+//							+ " | Address: " + rs.getString("empAddress") + " | Email: " + rs.getString("empEmail")
+//							+ " | Roles: " + rs.getString("empRole"));
+//				}
 			} catch (SQLException e) {
 				System.out.println("Error reading from database " + e.getMessage());
 			}
@@ -217,6 +292,7 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	public void changePassword(String id, String password) {
 		String changePassQuery = "update empLogin set empPass = ? where empId = ?";
 		try {
+			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement(changePassQuery);
 			pstmt.setString(1, password);
 			pstmt.setString(2, id);
@@ -228,6 +304,14 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error changing password " + e.getMessage());
+			if (conn != null) {
+		        try {
+		            System.err.println("transaction has rollback : " + e.getMessage());
+		            conn.rollback();
+		        } catch (SQLException ex) {
+		            System.err.println("Error during rollback: " + ex.getMessage());
+		        }
+		    }
 		}
 	}
 
@@ -236,6 +320,7 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 		String resetPassQuery = "update empLogin set empPass = ? where empId = ?";
 		if (checkEmpExists(id)) {
 			try {
+				conn.setAutoCommit(false);
 				PreparedStatement pstmt = conn.prepareStatement(resetPassQuery);
 				pstmt.setString(1, password);
 				pstmt.setString(2, id);
@@ -247,6 +332,14 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 				}
 			} catch (SQLException e) {
 				System.out.println("Error reseting password " + e.getMessage());
+				if (conn != null) {
+			        try {
+			            System.err.println("transaction has rollback : " + e.getMessage());
+			            conn.rollback();
+			        } catch (SQLException ex) {
+			            System.err.println("Error during rollback: " + ex.getMessage());
+			        }
+			    }
 			}
 		}
 	}
@@ -257,6 +350,7 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 		if (checkEmpExists(id)) {
 			if (!checkRoleExists(id, role)) {
 				try {
+					conn.setAutoCommit(false);
 					PreparedStatement pstmt = conn.prepareStatement(grantRoleQuery);
 					pstmt.setString(1, id);
 					pstmt.setObject(2, role, java.sql.Types.OTHER);
@@ -268,6 +362,14 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 					}
 				} catch (SQLException e) {
 					System.out.println("Error in granting role " + e.getMessage());
+					if (conn != null) {
+				        try {
+				            System.err.println("transaction has rollback : " + e.getMessage());
+				            conn.rollback();
+				        } catch (SQLException ex) {
+				            System.err.println("Error during rollback: " + ex.getMessage());
+				        }
+				    }
 				}
 			} else {
 				System.out.println("Role already exists");
@@ -283,6 +385,7 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 		if (checkEmpExists(id)) {
 			if (checkRoleExists(id, role)) {
 				try {
+					conn.setAutoCommit(false);
 					PreparedStatement pstmt = conn.prepareStatement(revokeRoleQuery);
 					pstmt.setString(1, id);
 					pstmt.setObject(2, role, java.sql.Types.OTHER);
@@ -292,8 +395,17 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 					} else {
 						System.out.println("cannot revoke Role");
 					}
+					conn.commit();
 				} catch (SQLException e) {
 					System.out.println("Error in revoking role " + e.getMessage());
+					if (conn != null) {
+				        try {
+				            System.err.println("transaction has rollback : " + e.getMessage());
+				            conn.rollback();
+				        } catch (SQLException ex) {
+				            System.err.println("Error during rollback: " + ex.getMessage());
+				        }
+				    }
 				}
 			} else {
 				System.out.println("Role doesn't exists");
