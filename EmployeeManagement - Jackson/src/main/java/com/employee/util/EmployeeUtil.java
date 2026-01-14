@@ -144,16 +144,16 @@ public class EmployeeUtil {
 		return false;
 	}
 
-	public boolean validateRole(String role) {
+	public EMSRoles validateRole(String role) {
 		try {
 			EMSRoles choice;
 			choice = EMSRoles.valueOf(role.toUpperCase());
-			employee.setRole(role);
-			return true;
+			employee.setRole(choice);
+			return choice;
 		} catch (IllegalArgumentException e) {
 			System.out.println("Invalid Role");
 		}
-		return false;
+		return null;
 	}
 
 	public boolean validatePassword(String password) {

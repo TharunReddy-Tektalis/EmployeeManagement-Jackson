@@ -15,7 +15,7 @@ import com.employee.util.EmployeeUtil;
 
 public class ViewEmpDetails {
 	public void viewAllEmp(EmployeeDAO dao) {
-		dao.view_all_Employees();
+		dao.viewAllEmployees();
 	}
 
 	public void viewEmpByID(EmployeeDAO dao) {
@@ -35,7 +35,7 @@ public class ViewEmpDetails {
 		}
 
 //		if (validations.checkEmpExists(id)) {
-			dao.viewEmployee_by_id(id);
+			dao.viewEmployeeById(id);
 //		} else {
 //			throw new EmployeeDoesNotExistException("Employee doesn't exist");
 //		}

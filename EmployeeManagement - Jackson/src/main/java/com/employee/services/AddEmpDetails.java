@@ -70,9 +70,10 @@ public class AddEmpDetails {
 
 //		JSONArray rolesArray = new JSONArray();
 		List<EMSRoles> rolesArray = new ArrayList<>();
-		if (!util.validateRole(role))
+		EMSRoles empRole = util.validateRole(role);
+		if (empRole==null)
 			return;
-		rolesArray.add(EMSRoles.valueOf(role));
+		rolesArray.add(empRole);
 
 		String password = util.generateRandomPassword();
 		System.out.println("Randomly Generated Default Password: " + password);

@@ -14,7 +14,7 @@ public class Employee {
 	private String dob;
 	private String address;
 	private String email;
-	private String role;
+	private EMSRoles role;
 	private String password;
 
 	public String getId() {
@@ -41,7 +41,7 @@ public class Employee {
 		return email;
 	}
 
-	public String getRole() {
+	public EMSRoles getRole() {
 		return role;
 	}
 
@@ -73,7 +73,7 @@ public class Employee {
 		this.email = email;
 	}
 
-	public void setRole(String role) {
+	public void setRole(EMSRoles role) {
 		this.role = role;
 	}
 

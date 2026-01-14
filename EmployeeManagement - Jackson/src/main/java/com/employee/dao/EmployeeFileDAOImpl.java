@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -13,11 +12,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.employee.controller.MenuController;
 import com.employee.enums.EMSLoginResult;
 import com.employee.enums.EMSRoles;
 import com.employee.model.EmpLoginResult;
-import com.employee.services.EmployeeLogin;
 import com.employee.util.EmployeeUtil;
 
 public class EmployeeFileDAOImpl implements EmployeeDAO {
@@ -157,7 +154,7 @@ public class EmployeeFileDAOImpl implements EmployeeDAO {
 		}
 	}
 
-	public void view_all_Employees() {
+	public void viewAllEmployees() {
 		try {
 			JSONArray array = getDataFromFile();
 
@@ -174,7 +171,7 @@ public class EmployeeFileDAOImpl implements EmployeeDAO {
 		}
 	}
 
-	public void viewEmployee_by_id(String id) {
+	public void viewEmployeeById(String id) {
 		if (checkEmpExists(id)) {
 			try {
 				JSONArray array = getDataFromFile();
@@ -233,17 +230,18 @@ public class EmployeeFileDAOImpl implements EmployeeDAO {
 		}
 	}
 
-	public void grantRole(String id, String role) {
+	public void grantRole(String id, EMSRoles role) {
 		if (checkEmpExists(id)) {
 			try {
 				JSONArray array = getDataFromFile();
 				for (Object obj : array) {
 					JSONObject jsonObject = (JSONObject) obj;
-					String currId = (String) jsonObject.get("id");
-					if (currId.equals(id)) {
+
+					if (id.equals(jsonObject.get("id"))) {
 						JSONArray roleArray = (JSONArray) jsonObject.get("role");
-						if (!roleArray.contains(role)) {
-							roleArray.add(role);
+						String strRole = role.name();
+						if (!roleArray.contains(strRole)) {
+							roleArray.add(strRole);
 							saveToFile(array);
 							System.out.println("Updated Employee Role");
 						} else {
@@ -257,26 +255,27 @@ public class EmployeeFileDAOImpl implements EmployeeDAO {
 		}
 	}
 
-	public void revokeRole(String id, String role) {
+	public void revokeRole(String id, EMSRoles role) {
 		if (checkEmpExists(id)) {
 			try {
 				JSONArray array = getDataFromFile();
 				for (Object obj : array) {
 					JSONObject jsonObject = (JSONObject) obj;
-					String currId = (String) jsonObject.get("id");
-					if (currId.equals(id)) {
+					if (id.equals(jsonObject.get("id"))) {
 						JSONArray roleArray = (JSONArray) jsonObject.get("role");
-						if (roleArray.size() > 1) {
-							if (roleArray.contains(role)) {
-								roleArray.remove(role);
-								saveToFile(array);
-								System.out.println("Revoked Employee Role");
-
-							} else {
-								System.out.println("Role doesn't exist");
-							}
-						} else {
+						String strRole = role.name();
+						if (roleArray.size() <= 1) {
 							System.out.println("There is should be atleast one role");
+							return;
+						}
+
+						if (roleArray.contains(strRole)) {
+							roleArray.remove(strRole);
+							saveToFile(array);
+							System.out.println("Revoked Employee Role");
+
+						} else {
+							System.out.println("Role doesn't exist");
 						}
 					}
 				}

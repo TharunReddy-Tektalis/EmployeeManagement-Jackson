@@ -5,9 +5,8 @@ import java.util.Scanner;
 import org.json.simple.parser.JSONParser;
 
 import com.employee.dao.EmployeeDAO;
-import com.employee.dao.EmployeeFileDAOImpl;
 import com.employee.dao.ServerSideValidations;
-import com.employee.model.Employee;
+import com.employee.enums.EMSRoles;
 import com.employee.util.EmployeeUtil;
 
 public class ChangeEmpRole {
@@ -28,10 +27,11 @@ public class ChangeEmpRole {
 			System.out.print("Enter new role:");
 			String role = sc.next();
 			sc.nextLine();
-			if (!util.validateRole(role))
+			EMSRoles empRole = util.validateRole(role);
+			if (empRole==null)
 				return;
-
-			dao.grantRole(id, role);
+			
+			dao.grantRole(id, empRole);
 //		} else {
 //			System.out.println("Employee doesn't exist");
 //		}
@@ -48,10 +48,11 @@ public class ChangeEmpRole {
 			System.out.print("Enter role to revoke:");
 			String role = sc.next();
 			sc.nextLine();
-			if (!util.validateRole(role))
+			EMSRoles empRole = util.validateRole(role);
+			if (empRole==null)
 				return;
 
-			dao.revokeRole(id, role);
+			dao.revokeRole(id, empRole);
 //		} else {
 //			System.out.println("Employee doesn't exist");
 //		}
