@@ -188,9 +188,7 @@ public class EmployeeUtil {
 			String username = prop.getProperty("db.username");
 			String password = prop.getProperty("db.password");
 
-			Connection conn = DriverManager.getConnection(url, username, password);
-			System.out.println("Connection to db successful...");
-			return conn;
+			return DriverManager.getConnection(url, username, password);
 		} catch (IOException e) {
 			System.out.println("Unable to read property file" + e.getMessage());
 		} catch (SQLException e) {

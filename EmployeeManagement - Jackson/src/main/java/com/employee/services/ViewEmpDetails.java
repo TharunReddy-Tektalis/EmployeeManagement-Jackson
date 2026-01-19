@@ -25,7 +25,7 @@ public class ViewEmpDetails {
 		String id;
 		if (MenuController.empLoginResult.getEmpRoles().contains(EMSRoles.ADMIN)
 				|| MenuController.empLoginResult.getEmpRoles().contains(EMSRoles.MANAGER)) {
-			System.out.println("Enter emp id:");
+			System.out.print("Enter emp id:");
 			id = sc.next();
 			if (!util.validateID(id))
 				return;
@@ -33,11 +33,6 @@ public class ViewEmpDetails {
 		} else {
 			id = MenuController.empLoginResult.getEmpId();
 		}
-
-//		if (validations.checkEmpExists(id)) {
-			dao.viewEmployeeById(id);
-//		} else {
-//			throw new EmployeeDoesNotExistException("Employee doesn't exist");
-//		}
+		dao.viewEmployeeById(id);
 	}
 }

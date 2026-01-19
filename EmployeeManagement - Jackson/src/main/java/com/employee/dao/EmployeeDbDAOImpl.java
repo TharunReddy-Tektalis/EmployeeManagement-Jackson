@@ -5,10 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +34,8 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	private static final String changePassQuery = "update empLogin set empPass = ? where empId = ?";
 	private static final String resetPassQuery = "update empLogin set empPass = ? where empId = ?";
 
-	private static final String grantRoleQuery = "insert into empRole (empId, empRole) values (?,?)";
-	private static final String revokeRoleQuery = "delete from empRole where empId = ? and empRole = ?";
+	private static final String grantRoleQuery = "insert into empRole (empId, empRole) values (?, ?::RoleEnum);";
+	private static final String revokeRoleQuery = "delete from empRole where empId = ? and empRole = ?::RoleEnum;";
 
 	private static final String loginQuery = "select empPass from empLogin where empId = ?";
 	private static final String roleQuery = "select empRole from EmpRole where empId = ?";
@@ -78,15 +75,25 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 		}
 	}
 
+//	private java.sql.Date toSqlDate(String dob) {
+//		try {
+//			return java.sql.Date.valueOf(LocalDate.parse(dob, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+//		} catch (Exception e) { 
+//			System.out.println("Error in formatting date " + e.getMessage());
+//		}
+//		return null;
+//	}
+
 	private java.sql.Date toSqlDate(String dob) {
 		try {
-			return java.sql.Date.valueOf(LocalDate.parse(dob, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-		} catch (Exception e) {
+			java.util.Date javaDate = new SimpleDateFormat("dd-MM-yyyy").parse(dob);
+			return new java.sql.Date(javaDate.getTime());
+		} catch (Exception e) { 
 			System.out.println("Error in formatting date " + e.getMessage());
 		}
-		return null;
+		return null;		
 	}
-
+	
 	private void printEmployee(ResultSet rs) throws SQLException {
 		System.out.println();
 		System.out.println("Emp ID: " + rs.getString("empId") + " | Name: " + rs.getString("empName")
@@ -99,7 +106,7 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 		try (PreparedStatement checkEmpPstmt = conn.prepareStatement(checkEmpQuery)) {
 			checkEmpPstmt.setString(1, checkId);
 			try (ResultSet rs = checkEmpPstmt.executeQuery()) {
-				return rs.next(); 
+				return rs.next();
 			}
 		} catch (SQLException e) {
 			System.out.println("Error checking emp in db" + e.getMessage());
@@ -111,7 +118,7 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 
 		try (PreparedStatement checkRolePstmt = conn.prepareStatement(checkRoleQuery)) {
 			checkRolePstmt.setString(1, id);
-			checkRolePstmt.setString(2, role.name());
+			checkRolePstmt.setObject(2, role.name(),java.sql.Types.OTHER);
 			try (ResultSet rs = checkRolePstmt.executeQuery()) {
 				return rs.next();
 			}
@@ -227,6 +234,8 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 				rollbackTransaction(conn);
 				System.out.println("Error while updating " + e.getMessage());
 			}
+		} else {
+			System.out.println("Employee Doesn't exist");
 		}
 	}
 
@@ -245,14 +254,18 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 
 	@Override
 	public void viewEmployeeById(String id) {
-		try (Connection conn = startConnection();
-				PreparedStatement viewByIdPstmt = conn.prepareStatement(viewEmpDataQueryById);
-				ResultSet rs = viewByIdPstmt.executeQuery();) {
+		try (Connection conn = startConnection();) {
 			if (checkEmpExists(conn, id)) {
-				viewByIdPstmt.setString(1, id);
-				while (rs.next()) {
-					printEmployee(rs);
+				try (PreparedStatement viewByIdPstmt = conn.prepareStatement(viewEmpDataQueryById);) {
+					viewByIdPstmt.setString(1, id);
+					try (ResultSet rs = viewByIdPstmt.executeQuery();) {
+						while (rs.next()) {
+							printEmployee(rs);
+						}
+					}
 				}
+			} else {
+				System.out.println("Employee Doesn't exist");
 			}
 		} catch (SQLException e) {
 			System.out.println("Error reading from database " + e.getMessage());
@@ -307,14 +320,14 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 			if (!checkRoleExists(conn, id, role)) {
 				try (PreparedStatement grantRolePstmt = conn.prepareStatement(grantRoleQuery)) {
 					grantRolePstmt.setString(1, id);
-					grantRolePstmt.setString(2, role.name());
+					grantRolePstmt.setObject(2, role.name(), java.sql.Types.OTHER);
 					int row = grantRolePstmt.executeUpdate();
 					if (row != 0) {
 						System.out.println("Successfully Granted Role");
+						commitTransaction(conn);
 						return;
 					}
 					System.out.println("cannot Grant Role");
-					commitTransaction(conn);
 				} catch (SQLException e) {
 					rollbackTransaction(conn);
 					System.out.println("Error while reseting password " + e.getMessage());
@@ -334,14 +347,14 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 			if (checkRoleExists(conn, id, role)) {
 				try (PreparedStatement revokeRolePstmt = conn.prepareStatement(revokeRoleQuery)) {
 					revokeRolePstmt.setString(1, id);
-					revokeRolePstmt.setString(2, role.name());
+					revokeRolePstmt.setObject(2, role.name(), java.sql.Types.OTHER);
 					int row = revokeRolePstmt.executeUpdate();
 					if (row != 0) {
 						System.out.println("Successfully Revoked Role");
+						commitTransaction(conn);
 						return;
 					}
 					System.out.println("cannot revoke Role");
-					commitTransaction(conn);
 				} catch (SQLException e) {
 					rollbackTransaction(conn);
 					System.out.println("Error while reseting password " + e.getMessage());
