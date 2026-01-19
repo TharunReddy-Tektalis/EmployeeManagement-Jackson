@@ -19,6 +19,7 @@ import com.employee.services.ViewEmpDetails;
 
 public class MenuController {
 	public static EmpLoginResult empLoginResult;
+
 	public static void displayMenu(EmployeeDAO dao) {
 		ViewEmpDetails viewEmpDetails = new ViewEmpDetails();
 		DeleteEmployee deleteEmployees = new DeleteEmployee();
@@ -37,7 +38,6 @@ public class MenuController {
 			System.out.println("EMPLOYEE MANAGEMENT SYSTEM");
 			System.out.println();
 
-			
 			while (true) {
 				for (EMSOperations op : EMSOperations.values()) {
 					if (rolePermission.hasAccess(role, op)) {

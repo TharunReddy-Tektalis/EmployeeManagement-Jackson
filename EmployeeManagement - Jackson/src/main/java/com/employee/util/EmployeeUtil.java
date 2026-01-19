@@ -26,22 +26,25 @@ public class EmployeeUtil {
 	Employee employee = new Employee();
 
 	public String generateHash(String password) {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
+		if(password!=null && !password.isEmpty()) {
+			try {
+				MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-			byte[] messageDigest = md.digest(password.getBytes());
+				byte[] messageDigest = md.digest(password.getBytes());
 
-			BigInteger no = new BigInteger(1, messageDigest);
-			String hashPassword = no.toString(16);
+				BigInteger no = new BigInteger(1, messageDigest);
+				String hashPassword = no.toString(16);
 
-			return hashPassword;
-		} catch (NoSuchAlgorithmException e) {
-			System.out.println("No such Algorithm exists" + e.getMessage());
-			return "";
+				return hashPassword;
+			} catch (NoSuchAlgorithmException e) {
+				System.out.println("No such Algorithm exists" + e.getMessage());
+				return "";
+			}
 		}
+		return null;
 	}
 
-	public static String generateRandomPassword() {
+	public String generateRandomPassword() {
 		String lower = "abcdefghijklmnopqrstuvwxyz";
 		String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String specialChar = "!@#$%_*+";
@@ -147,7 +150,7 @@ public class EmployeeUtil {
 	public EMSRoles validateRole(String role) {
 		try {
 			EMSRoles choice;
-			choice = EMSRoles.valueOf(role.toUpperCase());
+			choice = EMSRoles.valueOf(role.toUpperCase()); 
 			employee.setRole(choice);
 			return choice;
 		} catch (IllegalArgumentException e) {

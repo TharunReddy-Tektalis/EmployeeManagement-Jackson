@@ -15,10 +15,8 @@ public class AddEmpDetails {
 	public void addEmp(EmployeeDAO dao) { // INSERT Operation
 
 		ViewEmpDetails getEmployee = new ViewEmpDetails();
-//		EmployeeDAO dao = new EmployeeFileDAOImpl();
 		EmployeeUtil util = new EmployeeUtil();
-		Employee employee = new Employee();
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in); 
 
 		System.out.print("Enter emp first name:");
 		String fname = sc.next();
@@ -68,7 +66,6 @@ public class AddEmpDetails {
 		String role = sc.next();
 		sc.nextLine();
 
-//		JSONArray rolesArray = new JSONArray();
 		List<EMSRoles> rolesArray = new ArrayList<>();
 		EMSRoles empRole = util.validateRole(role);
 		if (empRole==null)

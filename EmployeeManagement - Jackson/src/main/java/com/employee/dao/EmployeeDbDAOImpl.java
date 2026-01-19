@@ -96,10 +96,10 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 
 	private boolean checkEmpExists(Connection conn, String checkId) {
 
-		try (PreparedStatement pstmt = conn.prepareStatement(checkEmpQuery)) {
-			pstmt.setString(1, checkId);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				return rs.next();
+		try (PreparedStatement checkEmpPstmt = conn.prepareStatement(checkEmpQuery)) {
+			checkEmpPstmt.setString(1, checkId);
+			try (ResultSet rs = checkEmpPstmt.executeQuery()) {
+				return rs.next(); 
 			}
 		} catch (SQLException e) {
 			System.out.println("Error checking emp in db" + e.getMessage());
@@ -109,10 +109,10 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 
 	private boolean checkRoleExists(Connection conn, String id, EMSRoles role) {
 
-		try (PreparedStatement pstmt = conn.prepareStatement(checkRoleQuery)) {
-			pstmt.setString(1, id);
-			pstmt.setString(2, role.name());
-			try (ResultSet rs = pstmt.executeQuery()) {
+		try (PreparedStatement checkRolePstmt = conn.prepareStatement(checkRoleQuery)) {
+			checkRolePstmt.setString(1, id);
+			checkRolePstmt.setString(2, role.name());
+			try (ResultSet rs = checkRolePstmt.executeQuery()) {
 				return rs.next();
 			}
 		} catch (SQLException e) {
@@ -122,10 +122,10 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	}
 
 	private List<EMSRoles> fetchRoles(Connection conn, String id) throws SQLException {
-		try (PreparedStatement pstmt1 = conn.prepareStatement(roleQuery);) {
+		try (PreparedStatement fetchRolePstmt = conn.prepareStatement(roleQuery);) {
 			List<EMSRoles> empRolesList = new ArrayList<>();
-			pstmt1.setString(1, id);
-			try (ResultSet rs1 = pstmt1.executeQuery()) {
+			fetchRolePstmt.setString(1, id);
+			try (ResultSet rs1 = fetchRolePstmt.executeQuery()) {
 				while (rs1.next()) {
 					empRolesList.add(EMSRoles.valueOf(rs1.getString("empRole")));
 				}
@@ -137,29 +137,29 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	public void addEmployee(String name, String dept, String DOB, String address, String email,
 			List<EMSRoles> rolesArray, String hashPassword) {
 		Connection conn = startConnection();
-		try (PreparedStatement pstmt = conn.prepareStatement(addIntoEmpData, new String[] { "empid" });
-				PreparedStatement pstmt1 = conn.prepareStatement(addIntoEmpLogin);
-				PreparedStatement pstmt2 = conn.prepareStatement(addIntoEmpRole);) {
-			pstmt.setString(1, name);
-			pstmt.setString(2, dept);
-			pstmt.setDate(3, toSqlDate(DOB));
-			pstmt.setString(4, address);
-			pstmt.setString(5, email);
-			pstmt.executeUpdate();
+		try (PreparedStatement addToEmpDataPstmt = conn.prepareStatement(addIntoEmpData, new String[] { "empid" });
+				PreparedStatement addToEmpLogPstmt = conn.prepareStatement(addIntoEmpLogin);
+				PreparedStatement addToEmpRolePstmt = conn.prepareStatement(addIntoEmpRole);) {
+			addToEmpDataPstmt.setString(1, name);
+			addToEmpDataPstmt.setString(2, dept);
+			addToEmpDataPstmt.setDate(3, toSqlDate(DOB));
+			addToEmpDataPstmt.setString(4, address);
+			addToEmpDataPstmt.setString(5, email);
+			addToEmpDataPstmt.executeUpdate();
 			String generatedId = "";
-			try (ResultSet rs = pstmt.getGeneratedKeys()) {
+			try (ResultSet rs = addToEmpDataPstmt.getGeneratedKeys()) {
 				if (!rs.next()) {
 					throw new SQLException("Failed to get generated employee ID");
 				}
 				generatedId = rs.getString(1);
 			}
-			pstmt1.setString(1, generatedId);
-			pstmt1.setString(2, hashPassword);
-			pstmt1.executeUpdate();
+			addToEmpLogPstmt.setString(1, generatedId);
+			addToEmpLogPstmt.setString(2, hashPassword);
+			addToEmpLogPstmt.executeUpdate();
 			for (EMSRoles role : rolesArray) {
-				pstmt2.setString(1, generatedId);
-				pstmt2.setObject(2, role.name(), java.sql.Types.OTHER);
-				pstmt2.executeUpdate();
+				addToEmpRolePstmt.setString(1, generatedId);
+				addToEmpRolePstmt.setObject(2, role.name(), java.sql.Types.OTHER);
+				addToEmpRolePstmt.executeUpdate();
 			}
 			commitTransaction(conn);
 			System.out.println("Inserted Employee successfully");
@@ -214,9 +214,9 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	public void deleteEmployee(String id) {
 		Connection conn = startConnection();
 		if (checkEmpExists(conn, id)) {
-			try (PreparedStatement pstmt = conn.prepareStatement(deleteQuery);) {
-				pstmt.setString(1, id);
-				int row = pstmt.executeUpdate();
+			try (PreparedStatement delPstmt = conn.prepareStatement(deleteQuery);) {
+				delPstmt.setString(1, id);
+				int row = delPstmt.executeUpdate();
 				if (row != 0) {
 					System.out.println("Deleted employee successfully");
 				} else {
@@ -233,8 +233,8 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	@Override
 	public void viewAllEmployees() {
 		try (Connection conn = startConnection();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(viewEmpDataQuery)) {
+				Statement viewAllStmt = conn.createStatement();
+				ResultSet rs = viewAllStmt.executeQuery(viewEmpDataQuery)) {
 			while (rs.next()) {
 				printEmployee(rs);
 			}
@@ -246,10 +246,10 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	@Override
 	public void viewEmployeeById(String id) {
 		try (Connection conn = startConnection();
-				PreparedStatement stmt = conn.prepareStatement(viewEmpDataQueryById);
-				ResultSet rs = stmt.executeQuery();) {
+				PreparedStatement viewByIdPstmt = conn.prepareStatement(viewEmpDataQueryById);
+				ResultSet rs = viewByIdPstmt.executeQuery();) {
 			if (checkEmpExists(conn, id)) {
-				stmt.setString(1, id);
+				viewByIdPstmt.setString(1, id);
 				while (rs.next()) {
 					printEmployee(rs);
 				}
@@ -262,10 +262,10 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	@Override
 	public void changePassword(String id, String password) {
 		Connection conn = startConnection();
-		try (PreparedStatement pstmt = conn.prepareStatement(changePassQuery)) {
-			pstmt.setString(1, password);
-			pstmt.setString(2, id);
-			int row = pstmt.executeUpdate();
+		try (PreparedStatement changePassPstmt = conn.prepareStatement(changePassQuery)) {
+			changePassPstmt.setString(1, password);
+			changePassPstmt.setString(2, id);
+			int row = changePassPstmt.executeUpdate();
 			if (row != 0) {
 				System.out.println("Successfully changed password");
 				commitTransaction(conn);
@@ -283,10 +283,10 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 		Connection conn = startConnection();
 
 		if (checkEmpExists(conn, id)) {
-			try (PreparedStatement pstmt = conn.prepareStatement(resetPassQuery);) {
-				pstmt.setString(1, password);
-				pstmt.setString(2, id);
-				int row = pstmt.executeUpdate();
+			try (PreparedStatement resetPassPstmt = conn.prepareStatement(resetPassQuery);) {
+				resetPassPstmt.setString(1, password);
+				resetPassPstmt.setString(2, id);
+				int row = resetPassPstmt.executeUpdate();
 				if (row != 0) {
 					System.out.println("Successfully reset password");
 					commitTransaction(conn);
@@ -305,10 +305,10 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 		Connection conn = startConnection();
 		if (checkEmpExists(conn, id)) {
 			if (!checkRoleExists(conn, id, role)) {
-				try (PreparedStatement pstmt = conn.prepareStatement(grantRoleQuery)) {
-					pstmt.setString(1, id);
-					pstmt.setString(2, role.name());
-					int row = pstmt.executeUpdate();
+				try (PreparedStatement grantRolePstmt = conn.prepareStatement(grantRoleQuery)) {
+					grantRolePstmt.setString(1, id);
+					grantRolePstmt.setString(2, role.name());
+					int row = grantRolePstmt.executeUpdate();
 					if (row != 0) {
 						System.out.println("Successfully Granted Role");
 						return;
@@ -332,10 +332,10 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 		Connection conn = startConnection();
 		if (checkEmpExists(conn, id)) {
 			if (checkRoleExists(conn, id, role)) {
-				try (PreparedStatement pstmt = conn.prepareStatement(revokeRoleQuery)) {
-					pstmt.setString(1, id);
-					pstmt.setString(2, role.name());
-					int row = pstmt.executeUpdate();
+				try (PreparedStatement revokeRolePstmt = conn.prepareStatement(revokeRoleQuery)) {
+					revokeRolePstmt.setString(1, id);
+					revokeRolePstmt.setString(2, role.name());
+					int row = revokeRolePstmt.executeUpdate();
 					if (row != 0) {
 						System.out.println("Successfully Revoked Role");
 						return;
@@ -355,9 +355,9 @@ public class EmployeeDbDAOImpl implements EmployeeDAO {
 	}
 
 	public EmpLoginResult validateLogin(String id, String password) {
-		try (Connection conn = startConnection(); PreparedStatement pstmt = conn.prepareStatement(loginQuery)) {
-			pstmt.setString(1, id);
-			try (ResultSet rs = pstmt.executeQuery()) {
+		try (Connection conn = startConnection(); PreparedStatement loginPstmt = conn.prepareStatement(loginQuery)) {
+			loginPstmt.setString(1, id);
+			try (ResultSet rs = loginPstmt.executeQuery()) {
 				if (!rs.next()) {
 					System.out.println("Invalid Id");
 					return new EmpLoginResult(EMSLoginResult.FAIL, null, null);
