@@ -47,3 +47,30 @@ INSERT INTO EmpRole (empId, empRole) VALUES
 ('tek1', 'ADMIN');
 
 select * from empRole;
+
+alter table empData alter column empaddress type varchar(100);
+alter table empData add column isActive BOOLEAN not null default true;
+
+ALTER TABLE EmpData
+ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN updated_at TIMESTAMP NULL,
+ADD COLUMN deleted_at TIMESTAMP NULL;
+
+ALTER TABLE EmpLogin
+ADD COLUMN password_changed_at TIMESTAMP NULL;
+
+create FUNCTION update_emp_on_role_change_trigger()
+RETURNS TRIGGER AS $$
+BEGIN
+	update empData
+	set updated_at = CURRENT_TIMESTAMP
+	where empId = COALESCE(NEW.empId, OLD.empId);
+	RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER emp_role_change
+AFTER insert or delete on empRole
+FOR EACH ROW 
+EXECUTE FUNCTION update_emp_on_role_change_trigger();
+

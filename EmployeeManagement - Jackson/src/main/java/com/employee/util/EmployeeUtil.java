@@ -20,10 +20,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.employee.enums.EMSRoles;
-import com.employee.model.Employee;
+import com.employee.exception.DataAccessException;
 
 public class EmployeeUtil {
-	Employee employee = new Employee();
+//	Employee employee = new Employee();
 
 	public String generateHash(String password) {
 		if(password!=null && !password.isEmpty()) {
@@ -70,13 +70,16 @@ public class EmployeeUtil {
 	}
 
 	public boolean validateID(String id) {
+		if(id==null || id.trim().isEmpty()) {
+			System.out.println("Invalid ID format");
+			return false;
+		}
 		Pattern idPattern = Pattern.compile("tek\\d{1,}");
 		Matcher matcher = idPattern.matcher(id);
 		if (matcher.matches()) {
-			employee.setId(id);
+//			employee.setId(id);
 			return true;
 		}
-		System.out.println("Invalid ID format");
 		return false;
 	}
 
@@ -85,8 +88,14 @@ public class EmployeeUtil {
 			System.out.println("Invalid Name format");
 			return false;
 		}
-		employee.setName(name);
-		return true;
+		Pattern namePattern = Pattern.compile("[a-zA-Z\\s]+");
+		Matcher matcher = namePattern.matcher(name);
+		if(matcher.matches()) {
+//			employee.setName(name.trim());
+			return true;
+		}
+		System.out.println("Invalid Name regex");
+		return false;
 	}
 
 	public boolean validateDept(String dept) {
@@ -94,11 +103,11 @@ public class EmployeeUtil {
 			System.out.println("Invalid Department format");
 			return false;
 		}
-		employee.setDept(dept);
+//		employee.setDept(dept.trim());
 		return true;
 	}
 
-	public boolean validateDOB(int day, int month, int year) {
+	public boolean validateDOB(String DOB) {
 //		Pattern dobPattern = Pattern.compile("(0[1-9]|[12][0-9]|3[01])\\-(0[1-9]|1[0-2])\\-\\d{4}");
 //		Matcher matcher = dobPattern.matcher(DOB);
 //		if(matcher.matches()) {
@@ -108,21 +117,35 @@ public class EmployeeUtil {
 //		System.out.println("Invalid DOB format");
 //		return false;
 
-		try {
-			LocalDate birthDate = LocalDate.of(year, month, day);
-			LocalDate today = LocalDate.now();
-			if (birthDate.isAfter(today)) {
-				System.out.println("Cannot give DOB in future");
+		Pattern dobPattern = Pattern.compile("^\\d{2}-\\d{2}-\\d{4}$");
+		Matcher matcher = dobPattern.matcher(DOB);
+		if(matcher.matches()) {
+			try {
+				String parts [] = DOB.split("-");
+				int day = Integer.parseInt(parts[0]);
+				int month = Integer.parseInt(parts[1]);
+				int year = Integer.parseInt(parts[2]);
+				
+				LocalDate birthDate = LocalDate.of(year, month, day);
+				LocalDate today = LocalDate.now();
+				
+				if (birthDate.isAfter(today)) {
+					System.out.println("Cannot give DOB in future");
+					return false;
+				}
+				if (birthDate.isBefore(today.minusYears(100))) {
+					System.out.println("Invalid DOB Year (too old) ");
+					return false;
+				}
+//				employee.setDOB(birthDate.toString());
+				return true;
+			} catch (DateTimeException e) {
+				System.out.println("Incorrect DOB Format" + e.getMessage());
 				return false;
 			}
-			if (birthDate.isBefore(today.minusYears(100))) {
-				System.out.println("Invalid DOB Year");
-				return false;
-			}
-			employee.setDOB(birthDate.toString());
-			return true;
-		} catch (DateTimeException e) {
-			System.out.println("Incorrect DOB Format" + e.getMessage());
+		}
+		else {
+			System.out.println("Invalid DOB format");
 			return false;
 		}
 	}
@@ -132,7 +155,7 @@ public class EmployeeUtil {
 			System.out.println("Invalid address format");
 			return false;
 		}
-		employee.setDept(address);
+//		employee.setAddress(address);
 		return true;
 	}
 
@@ -140,7 +163,7 @@ public class EmployeeUtil {
 		Pattern emailPattern = Pattern.compile("[A-Za-z0-9.]+@[A-Za-z0-9.]+\\.[A-za-z]{2,}");
 		Matcher matcher = emailPattern.matcher(email);
 		if (matcher.matches()) {
-			employee.setEmail(email);
+//			employee.setEmail(email);
 			return true;
 		}
 		System.out.println("Invalid Email format");
@@ -151,10 +174,10 @@ public class EmployeeUtil {
 		try {
 			EMSRoles choice;
 			choice = EMSRoles.valueOf(role.toUpperCase()); 
-			employee.setRole(choice);
+//			employee.setRole(choice);
 			return choice;
 		} catch (IllegalArgumentException e) {
-			System.out.println("Invalid Role");
+//			System.out.println("Invalid Role");
 		}
 		return null;
 	}
@@ -164,7 +187,7 @@ public class EmployeeUtil {
 			System.out.println("Invalid password format");
 			return false;
 		}
-		employee.setPassword(password);
+//		employee.setPassword(password);
 		return true;
 	}
 
@@ -173,7 +196,7 @@ public class EmployeeUtil {
 				.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%_*+])[A-Za-z\\d!@#$%_*+]{8,64}$");
 		Matcher matcher = passwordPattern.matcher(password);
 		if (matcher.matches()) {
-			employee.setPassword(password);
+//			employee.setPassword(password);
 			return true;
 		}
 		return false;
@@ -190,10 +213,9 @@ public class EmployeeUtil {
 
 			return DriverManager.getConnection(url, username, password);
 		} catch (IOException e) {
-			System.out.println("Unable to read property file" + e.getMessage());
-		} catch (SQLException e) {
-			System.out.println("Unable to connect to DB" + e.getMessage());
-		}
-		return null;
+	        throw new DataAccessException("Unable to read DB config file");
+	    } catch (SQLException e) {
+	        throw new DataAccessException("Unable to connect to DB");
+	    }
 	}
 }

@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.employee.services.ViewEmpDetails;
+//import com.employee.services.ViewEmpDetails;
 import com.employee.util.EmployeeUtil;
 
 public class ServerSideValidations {

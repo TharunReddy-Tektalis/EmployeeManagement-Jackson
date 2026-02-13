@@ -20,19 +20,23 @@ public class RolePermission {
 				EMSOperations.RESET_PASSWORD,
 				EMSOperations.UPDATE,
 				EMSOperations.VIEW,
-				EMSOperations.VIEW_BY_ID
+				EMSOperations.VIEW_BY_ID,
+				EMSOperations.FETCH_INACTIVE_EMPLOYEES,
+				EMSOperations.LOGOUT
 				));
 		map.put("MANAGER", EnumSet.of(
 				EMSOperations.EXIT,
 				EMSOperations.UPDATE,
 				EMSOperations.VIEW,
-				EMSOperations.VIEW_BY_ID
+				EMSOperations.VIEW_BY_ID,
+				EMSOperations.LOGOUT
 				));
 		map.put("USER", EnumSet.of(
 				EMSOperations.EXIT,
 				EMSOperations.UPDATE,
 				EMSOperations.VIEW_BY_ID,
-				EMSOperations.CHANGE_PASSWORD
+				EMSOperations.CHANGE_PASSWORD,
+				EMSOperations.LOGOUT
 				));
 	}
 	

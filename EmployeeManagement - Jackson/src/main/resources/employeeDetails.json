@@ -1,1 +1,100 @@
-[{"password":"e4a298c1518c2a4df1c001f8146e6412aa290500f94adc2a8a9d22269d30c5eb","role":["ADMIN","USER","MANAGER"],"address":"Bangalore","dob":"12:03:1995","name":"Aarav Sharma","id":"tek1","department":"IT","email":"aarav.sharma@gmail.com"},{"password":"a91878a94357e9a8082a2dee1b070ad7408c76e224e643b76a7690bbe47241c7","role":["USER"],"address":"Secundarabad","dob":"19-07-1995","name":"Rohan Verma","id":"tek2","department":"","email":"rohan.verma@gmail.com"},{"password":"a91878a94357e9a8082a2dee1b070ad7408c76e224e643b76a7690bbe47241c7","role":["MANAGER"],"address":"Mumbai","dob":"05:11:1992","name":"Vikram Singh","id":"tek3","department":"Finance","email":"vikram.singh@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["USER"],"address":"Ahmedabad","dob":"18-02-1997","name":"Kunal Mehra","id":"tek4","department":"Sales","email":"kunal.mehta@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["ADMIN"],"address":"Kochi","dob":"09:09:1994","name":"Rahul Nair","id":"tek5","department":"IT","email":"rahul.nair@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["MANAGER"],"address":"Hyderabad","dob":"27:06:1991","name":"Suresh Rao","id":"tek6","department":"Operations","email":"suresh.rao@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["USER"],"address":"Jaipur","dob":"14:02:1998","name":"Ankit Gupta","id":"tek7","department":"Marketing","email":"ankit.gupta@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["USER"],"address":"Pune","dob":"30:10:1995","name":"Pranav Joshi","id":"tek8","department":"Support","email":"pranav.joshi@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["MANAGER"],"address":"Warangal","dob":"11:12:1990","name":"Arjun Reddy","id":"tek9","department":"IT","email":"arjun.reddy@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["USER"],"address":"Chandigarh","dob":"03:05:1996","name":"Nikhil Bansal","id":"tek10","department":"Finance","email":"nikhil.bansal@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["ADMIN"],"address":"Nagpur","dob":"22:08:1993","name":"Amit Kulkarni","id":"tek11","department":"Operations","email":"amit.kulkarni@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["USER"],"address":"Indore","dob":"17:04:1997","name":"Siddharth Jain","id":"tek12","department":"Sales","email":"siddharth.jain@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["MANAGER"],"address":"Gurgaon","dob":"29:09:1992","name":"Deepak Yadav","id":"tek13","department":"HR","email":"deepak.yadav@gmail.com"},{"password":"9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c","role":["USER"],"address":"Surat","dob":"06:06:1998","name":"Manish Patel","id":"tek14","department":"Marketing","email":"manish.patel@gmail.com"},{"password":"24bc2388000f2c68093cee66e93913b42656087924c6fe2821ad979ae6d0059e","role":["ADMIN","MANAGER"],"address":"Varanasi","dob":"19:01:1994","name":"Sanjay Mishra","id":"tek15","department":"Finance","email":"sanjay.mishra@gmail.com"},{"password":"68c8826b6428960f77d85e5ae350daeb079cc81843b85a15141eff277104a050","address":"dfgdf","role":["USER"],"dob":"12-12-2005","name":"sdfsd sdfds","id":"tek17","department":"dsfsd","email":"gvhgv@bhfbh.com"},{"password":"e4a298c1518c2a4df1c001f8146e6412aa290500f94adc2a8a9d22269d30c5eb","address":"Chicago","role":["USER"],"dob":"17-7-1974","name":"Donald Trump","id":"tek19","department":"Administration","email":"yourpresident@gmail.us"}]
+[
+	{
+		"password": "e4a298c1518c2a4df1c001f8146e6412aa290500f94adc2a8a9d22269d30c5eb",
+		"role": [
+			"ADMIN",
+			"USER",
+			"MANAGER"
+		],
+		"address": "Bangalore",
+		"dob": "12-03-1995",
+		"name": "Aarav Sharma",
+		"id": "tek1",
+		"department": "IT",
+		"email": "aarav.sharma@gmail.com"
+	},
+	{
+		"password": "a91878a94357e9a8082a2dee1b070ad7408c76e224e643b76a7690bbe47241c7",
+		"role": [
+			"USER"
+		],
+		"address": "Secundarabad",
+		"dob": "19-07-1995",
+		"name": "Rohan Verma",
+		"id": "tek2",
+		"department": "",
+		"email": "rohan.verma@gmail.com"
+	},
+	{
+		"password": "a91878a94357e9a8082a2dee1b070ad7408c76e224e643b76a7690bbe47241c7",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Mumbai",
+		"dob": "05-11-1992",
+		"name": "Vikram Singh",
+		"id": "tek3",
+		"department": "Finance",
+		"email": "vikram.singh@gmail.com"
+	},
+	{
+		"password": "9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c",
+		"role": [
+			"USER"
+		],
+		"address": "Ahmedabad",
+		"dob": "18-02-1997",
+		"name": "Kunal Mehra",
+		"id": "tek4",
+		"department": "Sales",
+		"email": "kunal.mehta@gmail.com"
+	},
+	{
+		"password": "9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c",
+		"role": [
+			"ADMIN"
+		],
+		"address": "Kochi",
+		"dob": "09-09-1994",
+		"name": "Rahul Nair",
+		"id": "tek5",
+		"department": "IT",
+		"email": "rahul.nair@gmail.com"
+	},
+	{
+		"password": "9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c",
+		"role": [
+			"MANAGER"
+		],
+		"address": "Hyderabad",
+		"dob": "27-06-1991",
+		"name": "Suresh Rao",
+		"id": "tek6",
+		"department": "Operations",
+		"email": "suresh.rao@gmail.com"
+	},
+	{
+		"password": "68c8826b6428960f77d85e5ae350daeb079cc81843b85a15141eff277104a050",
+		"address": "dfgdf",
+		"role": [
+			"USER"
+		],
+		"dob": "12-12-2005",
+		"name": "sdfsd sdfds",
+		"id": "tek17",
+		"department": "dsfsd",
+		"email": "gvhgv@bhfbh.com"
+	},
+	{
+		"password": "e4a298c1518c2a4df1c001f8146e6412aa290500f94adc2a8a9d22269d30c5eb",
+		"address": "Chicago",
+		"role": [
+			"USER"
+		],
+		"dob": "17-7-1974",
+		"name": "Donald Trump",
+		"id": "tek19",
+		"department": "Administration",
+		"email": "yourpresident@gmail.us"
+	}
+]

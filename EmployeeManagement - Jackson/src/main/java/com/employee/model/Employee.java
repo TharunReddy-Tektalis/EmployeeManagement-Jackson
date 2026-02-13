@@ -1,10 +1,4 @@
 package com.employee.model;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.json.simple.JSONArray;
-
 import com.employee.enums.EMSRoles;
 
 public class Employee {
@@ -16,6 +10,27 @@ public class Employee {
 	private String email;
 	private EMSRoles role;
 	private String password;
+
+	public Employee() {
+
+	}
+
+	public Employee(String name, String dept, String dob, String address, String email) {
+		this.name = name;
+		this.dept = dept;
+		this.dob = dob;
+		this.address = address;
+		this.email = email;
+	}
+
+	public Employee(String id, String name, String dept, String dob, String address, String email) {
+		this.id = id;
+		this.name = name;
+		this.dept = dept;
+		this.dob = dob;
+		this.address = address;
+		this.email = email;
+	}
 
 	public String getId() {
 		return id;
@@ -79,5 +94,10 @@ public class Employee {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String toString() {
+		return "Emp ID: " + id + " | Name: " + name + " | Department: " + dept + " | DOB: " + dob + " | Address: "
+				+ address + " | Email: " + email;
 	}
 }

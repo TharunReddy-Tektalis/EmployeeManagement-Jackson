@@ -9,29 +9,18 @@ import com.employee.enums.EMSOperations;
 import com.employee.enums.EMSRoles;
 import com.employee.enums.RolePermission;
 import com.employee.model.EmpLoginResult;
-import com.employee.services.AddEmpDetails;
-import com.employee.services.ChangeEmpRole;
-import com.employee.services.DeleteEmployee;
-import com.employee.services.EmployeeLogin;
-import com.employee.services.PasswordOperations;
-import com.employee.services.UpdateEmpDetails;
-import com.employee.services.ViewEmpDetails;
+import com.employee.model.UserContext;
 
 public class MenuController {
-	public static EmpLoginResult empLoginResult;
-
 	public static void displayMenu(EmployeeDAO dao) {
-		ViewEmpDetails viewEmpDetails = new ViewEmpDetails();
-		DeleteEmployee deleteEmployees = new DeleteEmployee();
-		UpdateEmpDetails updateEmployees = new UpdateEmpDetails();
-		PasswordOperations passwordOperations = new PasswordOperations();
-		AddEmpDetails addEmployee = new AddEmpDetails();
-		ChangeEmpRole changeRole = new ChangeEmpRole();
 		RolePermission rolePermission = new RolePermission();
-		empLoginResult = EmployeeLogin.empLoginCheck(dao);
+		EmployeeController empController = new EmployeeController();
+		LoginController loginController = new LoginController();
+		EmpLoginResult empLoginResult = loginController.empLoginCheck(dao);
+		UserContext userContext = new UserContext(empLoginResult);
 		if (empLoginResult.getLoginResult().equals(EMSLoginResult.SUCCESS)) {
 
-			List<EMSRoles> role = empLoginResult.getEmpRoles();
+			List<EMSRoles> role = userContext.getEmpRoles();
 
 			Scanner sc = new Scanner(System.in);
 			System.out.println();
@@ -44,37 +33,62 @@ public class MenuController {
 						System.out.println(op);
 					}
 				}
-				try {
-					System.out.println();
-					System.out.print("Type your Choice:");
-					String input = sc.next().toUpperCase();
-					EMSOperations choice;
-					choice = EMSOperations.valueOf(input); // Checking whether user entered correct ENUM
 
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.ADD)
-						addEmployee.addEmp(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.VIEW)
-						viewEmpDetails.viewAllEmp(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.DELETE)
-						deleteEmployees.deleteEmp(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.UPDATE)
-						updateEmployees.updateEmp(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.VIEW_BY_ID)
-						viewEmpDetails.viewEmpByID(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.CHANGE_PASSWORD)
-						passwordOperations.changePassword(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.RESET_PASSWORD)
-						passwordOperations.resetPassword(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.GRANT_ROLE)
-						changeRole.grantEmpRole(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.REVOKE_ROLE)
-						changeRole.revokeEmpRole(dao);
-					if (rolePermission.hasAccess(role, choice) && choice == EMSOperations.EXIT) {
-						System.out.println("Exited Employee Management System");
-						System.exit(0);
-					}
+				System.out.println();
+				System.out.print("Type your Choice:");
+				String input = sc.next().toUpperCase();
+
+				EMSOperations choice = null;
+				try {
+					choice = EMSOperations.valueOf(input); // Checking whether user entered correct ENUM
 				} catch (IllegalArgumentException e) { // Catching exception
 					System.out.println("Invalid Menu Choice");
+					continue;
+				}
+				if (!rolePermission.hasAccess(role, choice)) {
+					System.out.println("Access denied");
+					continue;
+				}
+
+				switch (choice) {
+				case ADD:
+					empController.addEmployee(dao);
+					break;
+				case VIEW:
+					empController.viewAllEmp(dao);
+					break;
+				case DELETE:
+					empController.deleteEmp(dao);
+					break;
+				case UPDATE:
+					empController.updateEmp(dao, userContext);
+					break;
+				case VIEW_BY_ID:
+					empController.viewEmpByID(dao, userContext);
+					break;
+				case CHANGE_PASSWORD:
+					loginController.changePassword(dao, userContext);
+					break;
+				case RESET_PASSWORD:
+					loginController.resetPassword(dao);
+					break;
+				case GRANT_ROLE:
+					empController.grantEmpRole(dao);
+					break;
+				case REVOKE_ROLE:
+					empController.revokeEmpRole(dao);
+					break;
+				case FETCH_INACTIVE_EMPLOYEES:
+					empController.fetchInactiveEmployees(dao);
+					break;
+				case LOGOUT:
+					System.out.println("logout succesfully");
+					return;
+				case EXIT:
+					System.out.println("Exited Employee Management System");
+					System.exit(0);
+				default:
+					System.out.println("Invalid operation");
 				}
 			}
 		}
