@@ -21,7 +21,6 @@ public class MenuController {
 		if (empLoginResult.getLoginResult().equals(EMSLoginResult.SUCCESS)) {
 
 			List<EMSRoles> role = userContext.getEmpRoles();
-
 			Scanner sc = new Scanner(System.in);
 			System.out.println();
 			System.out.println("EMPLOYEE MANAGEMENT SYSTEM");

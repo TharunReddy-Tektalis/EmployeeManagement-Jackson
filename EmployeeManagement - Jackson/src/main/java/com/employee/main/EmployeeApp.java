@@ -5,10 +5,9 @@ import java.util.Scanner;
 import com.employee.controller.MenuController;
 import com.employee.dao.EmployeeDAO;
 import com.employee.dao.EmployeeDbDAOImpl;
-import com.employee.dao.EmployeeFileDAOImpl;
+//import com.employee.dao.EmployeeFileDAOImpl;
 import com.employee.enums.StorageTypes;
 import com.employee.exception.DataAccessException;
-import com.employee.util.EmployeeUtil;
 
 public class EmployeeApp {
 	public static void main(String[] args) {
@@ -26,8 +25,8 @@ public class EmployeeApp {
 					StorageTypes type = StorageTypes.valueOf(storageType);
 					switch (type) {
 					case FILE:
-						dao = new EmployeeFileDAOImpl();
-						MenuController.displayMenu(dao);
+//						dao = new EmployeeFileDAOImpl();
+//						MenuController.displayMenu(dao);
 						break;
 
 					case DATABASE:

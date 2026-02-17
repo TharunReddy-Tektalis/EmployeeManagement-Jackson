@@ -6,7 +6,7 @@ import java.util.List;
 import com.employee.dao.EmployeeDAO;
 import com.employee.enums.EMSRoles;
 import com.employee.exception.DataAccessException;
-import com.employee.exception.InputInvalidException;
+import com.employee.exception.ValidationException;
 import com.employee.exception.ServiceException;
 import com.employee.model.Employee;
 import com.employee.model.UserContext;
@@ -17,19 +17,19 @@ public class EmployeeServices {
 
 	public String addEmployee(EmployeeDAO dao, Employee employee, String role) {
 		if (!util.validateName(employee.getName()))
-			throw new InputInvalidException("Invalid Name");
+			throw new ValidationException("Invalid Name");
 		if (!util.validateDept(employee.getDept()))
-			throw new InputInvalidException("Invalid Department");
+			throw new ValidationException("Invalid Department");
 		if (!util.validateDOB(employee.getDOB()))
-			throw new InputInvalidException("Invalid DOB");
+			throw new ValidationException("Invalid DOB");
 		if (!util.validateAddress(employee.getAddress()))
-			throw new InputInvalidException("Invalid Address");
+			throw new ValidationException("Invalid Address");
 		if (!util.validateEmail(employee.getEmail()))
-			throw new InputInvalidException("Invalid Email");
+			throw new ValidationException("Invalid Email");
 		List<EMSRoles> rolesArray = new ArrayList<>();
 		EMSRoles empRole = util.validateRole(role);
 		if (empRole == null)
-			throw new InputInvalidException("Invalid Role");
+			throw new ValidationException("Invalid Role");
 		rolesArray.add(empRole);
 		employee.setRole(empRole);
 		String password = util.generateRandomPassword();
@@ -58,7 +58,7 @@ public class EmployeeServices {
 		Employee emp = null;
 		if (userContext.isAdminOrManager()) {
 			if (!util.validateID(id)) {
-				throw new InputInvalidException("Invalid ID");
+				throw new ValidationException("Invalid ID");
 			}
 			try {
 				emp = dao.viewEmployeeById(id);
@@ -80,7 +80,7 @@ public class EmployeeServices {
 
 	public void deleteEmp(EmployeeDAO dao, String id) {
 		if (!util.validateID(id))
-			throw new InputInvalidException("Invalid ID");
+			throw new ValidationException("Invalid ID");
 		try {
 			dao.deleteEmployee(id);
 		} catch (DataAccessException e) {
@@ -91,11 +91,11 @@ public class EmployeeServices {
 	public void updateEmp(EmployeeDAO dao, Employee employee, UserContext userContext) {
 		if (userContext.isOnlyUser()) {
 			if (!util.validateDOB(employee.getDOB()))
-				throw new InputInvalidException("Invalid DOB");
+				throw new ValidationException("Invalid DOB");
 			if (!util.validateAddress(employee.getAddress()))
-				throw new InputInvalidException("Invalid Address");
+				throw new ValidationException("Invalid Address");
 			if (!util.validateEmail(employee.getEmail()))
-				throw new InputInvalidException("Invalid Email");
+				throw new ValidationException("Invalid Email");
 			try {
 				dao.updateEmployee(employee, EMSRoles.USER);
 			} catch (DataAccessException e) {
@@ -103,17 +103,17 @@ public class EmployeeServices {
 			}
 		} else {
 			if (!util.validateID(employee.getId()))
-				throw new InputInvalidException("Invalid Id");
+				throw new ValidationException("Invalid Id");
 			if (!util.validateName(employee.getName()))
-				throw new InputInvalidException("Invalid Name");
+				throw new ValidationException("Invalid Name");
 			if (!util.validateDept(employee.getDept()))
-				throw new InputInvalidException("Invalid Department");
+				throw new ValidationException("Invalid Department");
 			if (!util.validateDOB(employee.getDOB()))
-				throw new InputInvalidException("Invalid DOB");
+				throw new ValidationException("Invalid DOB");
 			if (!util.validateAddress(employee.getAddress()))
-				throw new InputInvalidException("Invalid Address");
+				throw new ValidationException("Invalid Address");
 			if (!util.validateEmail(employee.getEmail()))
-				throw new InputInvalidException("Invalid Email");
+				throw new ValidationException("Invalid Email");
 			try {
 				dao.updateEmployee(employee, EMSRoles.ADMIN);
 			} catch (DataAccessException e) {
@@ -124,10 +124,10 @@ public class EmployeeServices {
 
 	public void grantEmpRole(String id, String role, EmployeeDAO dao) {
 		if (!util.validateID(id))
-			throw new InputInvalidException("Invalid Id");
+			throw new ValidationException("Invalid Id");
 		EMSRoles empRole = util.validateRole(role);
 		if (empRole == null)
-			throw new InputInvalidException("Invalid Role");
+			throw new ValidationException("Invalid Role");
 		try {
 			dao.grantRole(id, empRole);
 		}catch (DataAccessException e) {
@@ -137,10 +137,10 @@ public class EmployeeServices {
 	
 	public void revokeEmpRole(String id, String role, EmployeeDAO dao) {
 		if (!util.validateID(id))
-			throw new InputInvalidException("Invalid Id");
+			throw new ValidationException("Invalid Id");
 		EMSRoles empRole = util.validateRole(role);
 		if (empRole == null)
-			throw new InputInvalidException("Invalid Role");
+			throw new ValidationException("Invalid Role");
 		try {
 			dao.revokeRole(id, empRole);
 		}catch (DataAccessException e) {

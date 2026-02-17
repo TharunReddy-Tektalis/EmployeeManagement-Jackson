@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +27,7 @@ public class EmployeeUtil {
 //	Employee employee = new Employee();
 
 	public String generateHash(String password) {
-		if(password!=null && !password.isEmpty()) {
+		if (password != null && !password.isEmpty()) {
 			try {
 				MessageDigest md = MessageDigest.getInstance("SHA-256");
 
@@ -70,7 +71,7 @@ public class EmployeeUtil {
 	}
 
 	public boolean validateID(String id) {
-		if(id==null || id.trim().isEmpty()) {
+		if (id == null || id.trim().isEmpty()) {
 			System.out.println("Invalid ID format");
 			return false;
 		}
@@ -90,7 +91,7 @@ public class EmployeeUtil {
 		}
 		Pattern namePattern = Pattern.compile("[a-zA-Z\\s]+");
 		Matcher matcher = namePattern.matcher(name);
-		if(matcher.matches()) {
+		if (matcher.matches()) {
 //			employee.setName(name.trim());
 			return true;
 		}
@@ -103,7 +104,6 @@ public class EmployeeUtil {
 			System.out.println("Invalid Department format");
 			return false;
 		}
-//		employee.setDept(dept.trim());
 		return true;
 	}
 
@@ -116,19 +116,21 @@ public class EmployeeUtil {
 //		}
 //		System.out.println("Invalid DOB format");
 //		return false;
+		if (DOB == null)
+			return false;
 
 		Pattern dobPattern = Pattern.compile("^\\d{2}-\\d{2}-\\d{4}$");
 		Matcher matcher = dobPattern.matcher(DOB);
-		if(matcher.matches()) {
+		if (matcher.matches()) {
 			try {
-				String parts [] = DOB.split("-");
+				String parts[] = DOB.split("-");
 				int day = Integer.parseInt(parts[0]);
 				int month = Integer.parseInt(parts[1]);
 				int year = Integer.parseInt(parts[2]);
-				
+
 				LocalDate birthDate = LocalDate.of(year, month, day);
 				LocalDate today = LocalDate.now();
-				
+
 				if (birthDate.isAfter(today)) {
 					System.out.println("Cannot give DOB in future");
 					return false;
@@ -143,8 +145,7 @@ public class EmployeeUtil {
 				System.out.println("Incorrect DOB Format" + e.getMessage());
 				return false;
 			}
-		}
-		else {
+		} else {
 			System.out.println("Invalid DOB format");
 			return false;
 		}
@@ -160,10 +161,12 @@ public class EmployeeUtil {
 	}
 
 	public boolean validateEmail(String email) {
+		if (email == null) {
+			return false;
+		}
 		Pattern emailPattern = Pattern.compile("[A-Za-z0-9.]+@[A-Za-z0-9.]+\\.[A-za-z]{2,}");
 		Matcher matcher = emailPattern.matcher(email);
 		if (matcher.matches()) {
-//			employee.setEmail(email);
 			return true;
 		}
 		System.out.println("Invalid Email format");
@@ -171,15 +174,14 @@ public class EmployeeUtil {
 	}
 
 	public EMSRoles validateRole(String role) {
-		try {
-			EMSRoles choice;
-			choice = EMSRoles.valueOf(role.toUpperCase()); 
-//			employee.setRole(choice);
-			return choice;
-		} catch (IllegalArgumentException e) {
-//			System.out.println("Invalid Role");
+		if (role == null) {
+			return null;
 		}
-		return null;
+		try {
+			return EMSRoles.valueOf(role.toUpperCase());
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 
 	public boolean validatePassword(String password) {
@@ -192,6 +194,9 @@ public class EmployeeUtil {
 	}
 
 	public boolean validatePasswordFormat(String password) {
+		if (password == null) {
+			return false;
+		}
 		Pattern passwordPattern = Pattern
 				.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%_*+])[A-Za-z\\d!@#$%_*+]{8,64}$");
 		Matcher matcher = passwordPattern.matcher(password);
@@ -203,6 +208,7 @@ public class EmployeeUtil {
 	}
 
 	public Connection startConnection() {
+		
 		Properties prop = new Properties();
 		try (InputStream input = new FileInputStream("src/main/resources/EmsDbConfig.properties")) {
 			prop.load(input);
@@ -213,9 +219,9 @@ public class EmployeeUtil {
 
 			return DriverManager.getConnection(url, username, password);
 		} catch (IOException e) {
-	        throw new DataAccessException("Unable to read DB config file");
-	    } catch (SQLException e) {
-	        throw new DataAccessException("Unable to connect to DB");
-	    }
+			throw new DataAccessException("Unable to read DB config file");
+		} catch (SQLException e) {
+			throw new DataAccessException("Unable to connect to DB");
+		}
 	}
 }
