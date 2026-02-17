@@ -9,6 +9,7 @@
 - CHANGE_PASSWORD, RESET_PASSWORD, GRANT_ROLE, REVOKE_ROLE, FETCH_INACTIVE_EMPLOYEES, LOGOUT
 - Role based access control (ADMIN, MANAGER, USER)
 - Two persistant data storage - File system, Database
+- Permissions managed using enums and maps
 - Follows MVC architecture
 - Input validations
 - Password hashing using SHA256
