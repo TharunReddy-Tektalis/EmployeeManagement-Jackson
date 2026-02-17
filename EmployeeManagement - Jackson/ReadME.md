@@ -5,16 +5,17 @@
  
 ## Features
  
--- ADD, VIEW, DELETE, UPDATE, VIEW_BY_ID, CHANGE_PASSWORD, RESET_PASSWORD, GRANT_ROLE, REVOKE_ROLE,     FETCH_INACTIVE_EMPLOYEES, LOGOUT
--- Role based access control (ADMIN, MANAGER, USER)
--- Two persistant data storage - File system, Database
--- Follows MVC architecture
--- Input validations
--- Password hashing using SHA256
--- Implemented soft delete
--- Password follows specific format
--- Timestamps created (CreatedAt, UpdatedAt, PasswordChangedAt, DeletedAt) in database
--- Used triggers for automatic timestamp insertion into database
+- ADD, VIEW, DELETE, UPDATE, VIEW_BY_ID, 
+- CHANGE_PASSWORD, RESET_PASSWORD, GRANT_ROLE, REVOKE_ROLE, FETCH_INACTIVE_EMPLOYEES, LOGOUT
+- Role based access control (ADMIN, MANAGER, USER)
+- Two persistant data storage - File system, Database
+- Follows MVC architecture
+- Input validations
+- Password hashing using SHA256
+- Implemented soft delete
+- Password follows specific format
+- Timestamps created (CreatedAt, UpdatedAt, PasswordChangedAt, DeletedAt) in database
+- Used triggers for automatic timestamp insertion into database
 
 ## Usage
  
@@ -100,6 +101,7 @@ EmployeeManagement-Jackson/
 
 ### Login flow
 
+```
 EmployeeApp (MAIN)
 	↓
 MenuController
@@ -112,8 +114,10 @@ EmployeeDAO.validateLogin()
     ↓
 Database/File
 
+```
 ### Operations flow
 
+```
 EmployeeApp (MAIN)
 	↓
 MenuController
@@ -125,4 +129,5 @@ Service Layer
 DAO Layer
     ↓
 Database/File
+```
 
