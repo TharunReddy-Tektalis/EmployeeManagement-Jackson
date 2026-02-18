@@ -10,7 +10,6 @@ import com.employee.exception.ValidationException;
 import com.employee.model.Employee;
 import com.employee.model.UserContext;
 import com.employee.services.EmployeeServices;
-import com.employee.util.EmployeeUtil;
 
 public class EmployeeController {
 	EmployeeServices empServices = new EmployeeServices();
@@ -86,7 +85,7 @@ public class EmployeeController {
 		try {
 			empServices.deleteEmp(dao, id);
 			System.out.println("Employee deleted successfully");
-		} catch (ServiceException e) {
+		} catch (ServiceException | ValidationException e) {
 			System.out.println("error while deleting employee:" + e.getMessage());
 		}
 	}

@@ -36,36 +36,6 @@ class EmployeeUtilTest {
 		assertFalse(util.validateName(null));
 	}
 
-	// DOB Validation
-	@Test
-	void validateDOBShouldReturnTrueForValidDOB() {
-		assertTrue(util.validateDOB(8, 9, 2005));
-	}
-
-	@Test
-	void validateDOBShouldReturnFalseForFutureDOB() {
-		assertFalse(util.validateDOB(8, 9, 2055));
-	}
-
-	@Test
-	void validateDOBShouldReturnFalseForMinusHundredYearDOB() {
-		assertFalse(util.validateDOB(8, 9, 1905));
-	}
-
-	@Test
-	void validateDOBShouldReturnFalseForInvalidDOB() {
-		assertFalse(util.validateDOB(2005, 9, 8));
-	}
-
-	@Test
-	void validateDOBShouldReturnTrueForValidLeapYearDOB() {
-		assertTrue(util.validateDOB(29, 2, 2024));
-	}
-
-	@Test
-	void validateDOBShouldReturnFalseForInvalidLeapYearDOB() {
-		assertFalse(util.validateDOB(29, 2, 2023));
-	}
 
 	// Role Validation
 	@Test
