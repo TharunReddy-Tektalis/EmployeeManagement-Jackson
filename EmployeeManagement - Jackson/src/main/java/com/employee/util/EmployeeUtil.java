@@ -8,7 +8,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -16,16 +15,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.employee.enums.EMSRoles;
 import com.employee.exception.DataAccessException;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class EmployeeUtil {
 //	Employee employee = new Employee();
-
+	private static HikariDataSource dataSource;
+	
 	public String generateHash(String password) {
 		if (password != null && !password.isEmpty()) {
 			try {
@@ -209,19 +210,61 @@ public class EmployeeUtil {
 
 	public Connection startConnection() {
 		
-		Properties prop = new Properties();
-		try (InputStream input = new FileInputStream("src/main/resources/EmsDbConfig.properties")) {
-			prop.load(input);
-
-			String url = prop.getProperty("db.url");
-			String username = prop.getProperty("db.username");
-			String password = prop.getProperty("db.password");
-
-			return DriverManager.getConnection(url, username, password);
-		} catch (IOException e) {
-			throw new DataAccessException("Unable to read DB config file");
+//		Properties prop = new Properties();
+//		try (InputStream input = new FileInputStream("src/main/resources/EmsDbConfig.properties")) {
+//			prop.load(input);
+//
+//			String url = prop.getProperty("db.url");
+//			String username = prop.getProperty("db.username");
+//			String password = prop.getProperty("db.password");
+//
+//			return DriverManager.getConnection(url, username, password);
+//		} catch (IOException e) {
+//			throw new DataAccessException("Unable to read DB config file");
+//		} catch (SQLException e) {
+//			throw new DataAccessException("Unable to connect to DB");
+//		}
+//		init();
+		try {
+//			HikariDataSource dataSource = init();
+			if(dataSource == null) {
+				throw new IllegalStateException("Database not initialized");
+			}
+			return dataSource.getConnection();
 		} catch (SQLException e) {
 			throw new DataAccessException("Unable to connect to DB");
+		}
+	}
+	
+	public static void init() {
+		try(InputStream input = new FileInputStream("src/main/resources/EmsDbConfig.properties");){
+//			if(input == null) {
+//				throw new DataAccessException("Property file not found");
+//			}
+			Properties prop = new Properties();
+			prop.load(input);
+			
+			HikariConfig config = new HikariConfig();
+			config.setJdbcUrl(prop.getProperty("db.url"));
+			config.setUsername(prop.getProperty("db.username"));
+			config.setPassword(prop.getProperty("db.password"));
+			
+			config.setMaximumPoolSize(10);
+			config.setMinimumIdle(2);
+			config.setConnectionTimeout(30000);
+			config.setIdleTimeout(30000);
+			config.setMaxLifetime(1800000);
+			
+			dataSource = new HikariDataSource(config);
+		}
+		catch (IOException e) {
+			throw new DataAccessException("Unable to read DB config file");
+		}
+	}
+	
+	public static void shutdown() {
+		if(dataSource!= null && !dataSource.isClosed()) {
+			dataSource.close();
 		}
 	}
 }
