@@ -72,7 +72,7 @@ public class EmployeeUtil {
 
 	public boolean validateID(String id) {
 		if (id == null || id.trim().isEmpty()) {
-			System.out.println("Invalid ID format");
+//			System.out.println("Invalid ID format");
 			return false;
 		}
 		Pattern idPattern = Pattern.compile("tek\\d{1,}");
@@ -86,7 +86,7 @@ public class EmployeeUtil {
 
 	public boolean validateName(String name) {
 		if (name == null || name.trim().isEmpty()) {
-			System.out.println("Invalid Name format");
+//			System.out.println("Invalid Name format");
 			return false;
 		}
 		Pattern namePattern = Pattern.compile("[a-zA-Z\\s]+");
@@ -95,13 +95,13 @@ public class EmployeeUtil {
 //			employee.setName(name.trim());
 			return true;
 		}
-		System.out.println("Invalid Name regex");
+//		System.out.println("Invalid Name regex");
 		return false;
 	}
 
 	public boolean validateDept(String dept) {
 		if (dept == null || dept.trim().isEmpty()) {
-			System.out.println("Invalid Department format");
+//			System.out.println("Invalid Department format");
 			return false;
 		}
 		return true;
@@ -132,21 +132,21 @@ public class EmployeeUtil {
 				LocalDate today = LocalDate.now();
 
 				if (birthDate.isAfter(today)) {
-					System.out.println("Cannot give DOB in future");
+//					System.out.println("Cannot give DOB in future");
 					return false;
 				}
 				if (birthDate.isBefore(today.minusYears(100))) {
-					System.out.println("Invalid DOB Year (too old) ");
+//					System.out.println("Invalid DOB Year (too old) ");
 					return false;
 				}
 //				employee.setDOB(birthDate.toString());
 				return true;
 			} catch (DateTimeException e) {
-				System.out.println("Incorrect DOB Format" + e.getMessage());
+//				System.out.println("Incorrect DOB Format" + e.getMessage());
 				return false;
 			}
 		} else {
-			System.out.println("Invalid DOB format");
+//			System.out.println("Invalid DOB format");
 			return false;
 		}
 	}
@@ -169,7 +169,7 @@ public class EmployeeUtil {
 		if (matcher.matches()) {
 			return true;
 		}
-		System.out.println("Invalid Email format");
+//		System.out.println("Invalid Email format");
 		return false;
 	}
 
