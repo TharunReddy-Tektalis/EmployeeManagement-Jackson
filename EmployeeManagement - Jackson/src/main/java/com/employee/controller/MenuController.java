@@ -10,6 +10,7 @@ import com.employee.enums.EMSRoles;
 import com.employee.enums.RolePermission;
 import com.employee.model.EmpLoginResult;
 import com.employee.model.UserContext;
+import com.employee.util.EmployeeUtil;
 
 public class MenuController {
 	public static void displayMenu(EmployeeDAO dao) {
@@ -85,6 +86,8 @@ public class MenuController {
 					return;
 				case EXIT:
 					System.out.println("Exited Employee Management System");
+					EmployeeUtil.shutdown();
+					sc.close();
 					System.exit(0);
 				default:
 					System.out.println("Invalid operation");

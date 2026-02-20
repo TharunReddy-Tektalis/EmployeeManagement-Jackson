@@ -8,6 +8,7 @@ import com.employee.dao.EmployeeDbDAOImpl;
 //import com.employee.dao.EmployeeFileDAOImpl;
 import com.employee.enums.StorageTypes;
 import com.employee.exception.DataAccessException;
+import com.employee.util.EmployeeUtil;
 
 public class EmployeeApp {
 	public static void main(String[] args) {
@@ -32,6 +33,7 @@ public class EmployeeApp {
 					case DATABASE:
 //						util.startConnection();
 						try {
+							EmployeeUtil.init();
 					        dao = new EmployeeDbDAOImpl();
 					        MenuController.displayMenu(dao);
 					    } catch (DataAccessException e) {

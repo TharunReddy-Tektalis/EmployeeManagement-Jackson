@@ -33,8 +33,8 @@ public class EmployeeServicesTest {
 	EmployeeServices employeeServices;
 
 	@Test
-	@DisplayName("Calling add employee method in DAO")
-	void addEmp() {
+	@DisplayName("add employee should call dao when input is valid")
+	void addEmployee_validInput_callsDao() {
 		Employee employee = new Employee("Tharun", "Sales", "12-12-2000", "Hyderabad", "tharun@gmail.com");
 		employeeServices.addEmployee(employeeDAO, employee, "ADMIN");
 
@@ -43,7 +43,8 @@ public class EmployeeServicesTest {
 	}
 
 	@Test
-	void invalid_dob_return_error() {
+	@DisplayName("add employee should throw exception for invalid DOB")
+	void invalidDob_throwsValidationException() {
 		Employee employee = new Employee("Tharun", "Sales", "42-24-2000", "Hyderabad", "tharun@gmail.com");
 		ValidationException ex = assertThrows(ValidationException.class, () -> {
 			employeeServices.addEmployee(employeeDAO, employee, "ADMIN");
@@ -52,15 +53,16 @@ public class EmployeeServicesTest {
 	}
 
 	@Test
-	void null_role_return_error() {
-		assertThrows(ValidationException.class, ()->{
+	@DisplayName("should throw validation exception when role is null")
+	void grantEmpRole_nullRole_throwsValidationException() {
+		assertThrows(ValidationException.class, () -> {
 			employeeServices.grantEmpRole("asdaa", null, employeeDAO);
 		});
 	}
-	
+
 	@Test
-	@DisplayName("Fetch employee method")
-	void fetchEmployee() {
+	@DisplayName("view all emp should return list from DAO")
+	void viewAllEmp_returnsEmployeeList() {
 		List<Employee> list = new ArrayList<>();
 		list.add(new Employee("Tharun", "Sales", "12-12-2000", "Hyderabad", "tharun@gmail.com"));
 		when(employeeDAO.viewAllEmployees()).thenReturn(list);
@@ -68,16 +70,16 @@ public class EmployeeServicesTest {
 	}
 
 	@Test
-	@DisplayName("ID Validation for delete employee method")
-	void deleteEmployee() {
+	@DisplayName("delete should throw exception for invalid ID")
+	void deleteEmp_invalidId_throwsValidationException() {
 		assertThrows(ValidationException.class, () -> {
 			employeeServices.deleteEmp(employeeDAO, "emp1");
 		});
 	}
 
 	@Test
-	@DisplayName("Employee doesnt exist")
-	void empDoesnotExist() {
+	@DisplayName("Employee doesnt exist should throw exception")
+	void deleteEmp_employeeDoesNotExist_throwsException() {
 		doThrow(new EmployeeDoesNotExistException("No employee")).when(employeeDAO).deleteEmployee(anyString());
 
 		assertThrows(EmployeeDoesNotExistException.class, () -> {

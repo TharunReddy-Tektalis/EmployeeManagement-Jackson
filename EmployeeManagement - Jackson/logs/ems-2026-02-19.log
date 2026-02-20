@@ -1,0 +1,34 @@
+2026-02-19 13:00:15,422 WARN  com.employee.services.EmployeeServices - invalid name
+2026-02-19 15:08:35,011 WARN  com.employee.services.EmployeeServices - invalid ID
+2026-02-19 15:08:44,706 INFO  com.employee.services.EmployeeServices - successful login
+2026-02-19 15:11:39,323 WARN  com.employee.services.EmployeeServices - Invalid credentials
+2026-02-19 15:11:54,470 INFO  com.employee.services.EmployeeServices - successful login
+2026-02-19 15:12:29,421 WARN  com.employee.services.EmployeeServices - invalid DOB
+2026-02-19 15:13:58,592 INFO  com.employee.services.EmployeeServices - successful login
+2026-02-19 15:14:06,503 ERROR com.employee.services.EmployeeServices - Unable to view employee by ID Employee tek69doesn't exist
+2026-02-19 15:14:48,062 INFO  com.employee.services.EmployeeServices - successfully fetched inactive employees
+2026-02-19 15:15:02,651 INFO  com.employee.services.EmployeeServices - successfully reset password
+2026-02-19 15:15:16,468 INFO  com.employee.services.EmployeeServices - successfully granted employee role
+2026-02-19 15:15:45,446 INFO  com.employee.services.EmployeeServices - successfully revoked employee role
+2026-02-19 15:15:50,731 INFO  com.employee.services.EmployeeServices - successfully fetched all employees
+2026-02-19 18:05:55,988 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-19 18:05:56,208 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2a5c8d3f
+2026-02-19 18:05:56,210 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-19 18:05:56,233 INFO  com.employee.services.EmployeeServices - successful login
+2026-02-19 18:07:17,207 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-19 18:07:17,428 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2a5c8d3f
+2026-02-19 18:07:17,430 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-19 18:07:17,450 INFO  com.employee.services.EmployeeServices - successful login
+2026-02-19 18:07:20,009 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-02-19 18:07:20,056 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@424e1977
+2026-02-19 18:07:20,056 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-02-19 18:07:20,063 INFO  com.employee.services.EmployeeServices - successfully fetched all employees
+2026-02-19 18:08:10,175 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2026-02-19 18:08:10,227 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@313b2ea6
+2026-02-19 18:08:10,227 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2026-02-19 18:08:10,232 INFO  com.employee.services.EmployeeServices - successfully fetched all employees
+2026-02-19 18:13:02,550 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-19 18:13:02,782 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@fbd1f6
+2026-02-19 18:13:02,783 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-19 18:13:09,291 INFO  com.employee.services.EmployeeServices - successful login
+2026-02-19 18:13:14,545 INFO  com.employee.services.EmployeeServices - successfully fetched all employees
